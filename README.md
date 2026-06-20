@@ -27,7 +27,7 @@ checks, and Diataxis docs.
 This toolkit **does not depend on gstack** and does not clone it. It is simpler,
 private, and hardened for work use:
 
-- ~23 skills + ~17 agents, all plain markdown — no external binaries, no telemetry,
+- ~23 skills + ~18 agents, all plain markdown — no external binaries, no telemetry,
   no analytics directory, no required browser automation.
 - Every reusable file is generic; nothing proprietary is ever persisted globally.
 - Safety hooks are minimal and "careful, not annoying" (confirm, don't block).
@@ -45,7 +45,7 @@ claude-code-toolkit/
     CLAUDE.md                      # global operating instructions
     settings.json                  # safe starter settings + hooks
     skills/<name>/SKILL.md         # 23 reusable skills
-    agents/<name>.md               # 17 reusable subagents
+    agents/<name>.md               # 18 reusable subagents
   templates/                       # examples to copy into real repos
     project-claude.md              # example project CLAUDE.md
     project-settings.json          # example project .claude/settings.json
@@ -116,6 +116,11 @@ The everyday engineering loop: understand → plan → implement in small steps 
 verify with evidence → self-review before declaring done. It's the orchestrator
 that pulls in the specialists below at the right moments and holds scope tight.
 Use it when you're actually building or fixing and no more specific skill fits.
+
+There's also a matching **`software-engineer` subagent** — a delegatable,
+write-capable implementer for a well-scoped task you want carried out in its own
+context. It is the **only** agent with edit/write tools; the other 17 are
+read-only reviewers. Active `freeze`/`careful` hooks still apply to it.
 
 ### Plan first
 
