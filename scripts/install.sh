@@ -81,8 +81,44 @@ place_file() { # place_file <relsrc> <reldest>
   say "installed $2"
 }
 
+merge_settings() { # merge toolkit settings.json INTO existing, preserving user keys
+  local s="$SRC/settings.json" d="$DEST/settings.json"
+  [ -f "$s" ] || { say "skip settings.json (no source)"; return 0; }
+
+  # Fresh machine: nothing to preserve, just copy.
+  if [ ! -f "$d" ]; then
+    do_ "cp '$s' '$d'"
+    say "installed settings.json (new)"
+    return 0
+  fi
+
+  backup "$d"
+
+  # Merge requires jq. Without it, NEVER clobber the user's settings.
+  if ! command -v jq >/dev/null 2>&1; then
+    say "WARNING: jq not found — left your settings.json untouched."
+    say "  Manually merge keys from: $s"
+    return 0
+  fi
+
+  # Deep-merge: existing first, toolkit second (toolkit wins on the keys it sets:
+  # hooks, permissions, skillOverrides, token knobs). User-only keys (plugins,
+  # theme, env, ...) are preserved.
+  if [ "$DRY" -eq 1 ]; then
+    echo "  DRY: jq -s '.[0] * .[1]' '$d' '$s' > '$d' (deep-merge, preserve user keys)"
+  else
+    if jq -s '.[0] * .[1]' "$d" "$s" > "$d.tmp" && jq empty "$d.tmp" 2>/dev/null; then
+      mv "$d.tmp" "$d"
+      say "merged settings.json (your plugins/theme/env preserved)"
+    else
+      rm -f "$d.tmp"
+      say "WARNING: settings.json merge failed — left existing file untouched."
+    fi
+  fi
+}
+
 place_file "CLAUDE.md" "CLAUDE.md"
-place_file "settings.json" "settings.json"
+merge_settings
 place_dir "skills"
 place_dir "agents"
 
