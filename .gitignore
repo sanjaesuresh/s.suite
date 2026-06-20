@@ -1,0 +1,50 @@
+# ============================================================
+# claude-code-toolkit / .gitignore
+# This repo is a PORTABLE, GENERIC toolkit. Nothing project-
+# specific, machine-specific, or proprietary should ever land
+# here. The rules below are deliberately aggressive.
+# ============================================================
+
+# --- Secrets & credentials (never commit) ---
+.env
+.env.*
+*.local
+.credentials.json
+.claude.json
+**/credentials*
+**/secrets*
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+*.token
+
+# --- Local / machine-specific Claude settings ---
+# settings.local.json holds per-machine overrides and possible
+# secrets. It must NEVER be committed.
+settings.local.json
+**/settings.local.json
+global/settings.local.json
+
+# --- Session-specific safety + context state ---
+# These are produced at runtime in real repos, not here.
+.claude/context/
+.claude/session-state/
+**/.freeze-boundary
+**/current-session.md
+*.session.md
+
+# --- Backups created by install/sync scripts ---
+*.bak
+*.backup
+backup-*/
+.claude-backup-*/
+
+# --- OS / editor noise ---
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
