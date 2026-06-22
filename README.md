@@ -49,6 +49,7 @@ written so Claude auto-invokes the right one.
 | Skill | What it does |
 |---|---|
 | `/pre-pr-review` | Strict, skeptical review of your current diff before opening a PR. |
+| `/learn-from-review` | Turn a PR review comment into a durable toolkit rule (in CLAUDE.md, a skill, or an agent) so the same mistake isn't repeated. Logs to `LESSONS.md`. |
 | `/deep-codebase-audit` ⊘ | Multi-agent deep audit of a repo, feature, folder, or diff. |
 | `/test-gap-analysis` ⊘ | Find missing, weak, or misleading tests in code or a diff. |
 | `/ai-slop-cleanup` ⊘ | Find (and optionally fix) AI slop, overengineering, dead code, fake robustness. |
