@@ -41,6 +41,11 @@ global/settings.local.json
 backup-*/
 .claude-backup-*/
 
+# --- Local design / planning docs (not part of the portable toolkit) ---
+# Specs and plans are working artifacts for building the toolkit, not
+# something installed into ~/.claude. Keep them local.
+docs/
+
 # --- OS / editor noise ---
 .DS_Store
 Thumbs.db
