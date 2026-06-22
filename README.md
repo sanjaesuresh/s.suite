@@ -54,6 +54,7 @@ written so Claude auto-invokes the right one.
 | `/test-gap-analysis` ⊘ | Find missing, weak, or misleading tests in code or a diff. |
 | `/ai-slop-cleanup` ⊘ | Find (and optionally fix) AI slop, overengineering, dead code, fake robustness. |
 | `/pr-description` | Generate a PR description grounded in the real diff + validation performed. |
+| `/standup` | Mine recent git, PRs, and blocker signals into a short, human-sounding Yesterday/Today/Blockers script to say in standup. |
 
 **Debug & refactor**
 
