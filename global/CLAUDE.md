@@ -21,8 +21,8 @@ These are my durable, cross-project instructions. A project's own
   invoke it. Knowing the concept is not the same as running the skill.
 - Order: **process skills first** (`brainstorming`, `systematic-debugging`,
   `kickoff`, `writing-plans`), then **implementation skills** (`software-engineer`,
-  `frontend-design`). "Build X" → brainstorm/plan first. "Fix bug Y" →
-  systematic-debugging first.
+  `frontend-engineer`, `frontend-design`). "Build X" → brainstorm/plan first.
+  "Fix bug Y" → systematic-debugging first.
 - Treat rigid skills (`test-driven-development`, `systematic-debugging`,
   `verification-before-completion`) as discipline to follow exactly, not adapt away.
 - These instructions still win on conflict: an explicit user request or a
@@ -36,6 +36,12 @@ When more than one skill could fire, these win:
   bakes in test-first and verify-before-done — do **not** invoke
   `test-driven-development` or `verification-before-completion` separately
   (both are off).
+- **Build or change web UI (component, page, dashboard, landing page):**
+  `frontend-engineer`, not `software-engineer`. It adds the browser gates the
+  generic loop lacks — a deliberate not-AI-looking design, WCAG 2.2 a11y, Core
+  Web Vitals, and every-state coverage. Use `frontend-design`/`impeccable` only
+  for open-ended *creative* direction, then return to `frontend-engineer` to
+  build it; use `unslop-ui` for a review-only de-slop audit.
 - **Execute a written plan with mostly-independent tasks:** `subagent-driven-development`.
 - **Write a multi-step plan artifact:** `writing-plans`. Not `implementation-plan`
   or `spec` (both off) — invoke `spec` only when "definition of done" is the hard

@@ -23,7 +23,7 @@ written so Claude auto-invokes the right one.
 > tokens (marked ⊘ below). They're not deleted — flip them on in
 > `settings.json` under `skillOverrides` (`"office-hours": "on"`) when you want them.
 
-## Skills (26)
+## Skills (27)
 
 **Plan & scope**
 
@@ -43,6 +43,7 @@ written so Claude auto-invokes the right one.
 | Skill | What it does |
 |---|---|
 | `/software-engineer` | The default build/fix loop: understand → plan → implement in small steps → verify with evidence → self-review. Orchestrates the specialists. |
+| `/frontend-engineer` | The build/fix loop for **web UI**: brief-first design (so it doesn't look AI-generated) + engineering gates — WCAG 2.2 a11y, Core Web Vitals, every-state coverage, semantic HTML, tokens, production-readiness (SEO/CSP/images/CI). Bundles a CI scanner for AI design tells. |
 
 **Research**
 
@@ -88,19 +89,20 @@ written so Claude auto-invokes the right one.
 | `/context-save` | Save task, decisions, git state, and remaining work to a project-local file. |
 | `/context-restore` | Restore saved context and reconcile it with the current git state. |
 
-## Agents (19)
+## Agents (20)
 
 Subagents you (or a skill) can delegate to. **All are read-only except
-`software-engineer`**, which is the only one with edit/write tools. The
+`software-engineer` and `frontend-engineer`**, the two with edit/write tools. The
 `deep-researcher` additionally reaches the public web (WebSearch/WebFetch) and
 has read-only Bash for fetching sources — it never edits the repo. The
 deeper-reasoning agents run on `opus`; the rest on `sonnet`.
 
-**Implementer (write-capable)**
+**Implementers (write-capable)**
 
 | Agent | What it does |
 |---|---|
-| `software-engineer` ⚙️ | Delegatable implementer for a well-scoped build/fix, end to end. The **only** agent that can edit files. Never commits or pushes unless you explicitly ask. |
+| `software-engineer` ⚙️ | Delegatable implementer for a well-scoped build/fix, end to end. Never commits or pushes unless you explicitly ask. |
+| `frontend-engineer` ⚙️ | Delegatable implementer for a well-scoped **web UI** build/fix: deliberate not-AI-looking design + a11y/CWV/state/production-readiness engineering, end to end. The browser-facing counterpart to `software-engineer`. |
 
 **Product & design**
 
@@ -248,8 +250,9 @@ Use it when you're actually building or fixing and no more specific skill fits.
 
 There's also a matching **`software-engineer` subagent** — a delegatable,
 write-capable implementer for a well-scoped task you want carried out in its own
-context. It is the **only** agent with edit/write tools; the other 17 are
-read-only reviewers. Active `freeze`/`careful` hooks still apply to it.
+context, and a **`frontend-engineer` subagent** that does the same for web UI.
+These two are the only agents with edit/write tools; the rest are read-only
+reviewers. Active `freeze`/`careful` hooks still apply to them.
 
 ### Plan first
 
