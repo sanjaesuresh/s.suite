@@ -23,7 +23,7 @@ written so Claude auto-invokes the right one.
 > tokens (marked ⊘ below). They're not deleted — flip them on in
 > `settings.json` under `skillOverrides` (`"office-hours": "on"`) when you want them.
 
-## Skills (25)
+## Skills (26)
 
 **Plan & scope**
 
@@ -43,6 +43,12 @@ written so Claude auto-invokes the right one.
 | Skill | What it does |
 |---|---|
 | `/software-engineer` | The default build/fix loop: understand → plan → implement in small steps → verify with evidence → self-review. Orchestrates the specialists. |
+
+**Research**
+
+| Skill | What it does |
+|---|---|
+| `/deep-research` | Multi-source, fact-checked web research: clarifies an underspecified question, fans out parallel `deep-researcher` workers, adversarially verifies the load-bearing claims, and synthesizes a cited report with a confidence/gaps section. Effort-tiered (`--quick` / `--deep`) so trivial questions don't spawn a fleet. |
 
 **Review & audit** (read-only)
 
@@ -82,10 +88,12 @@ written so Claude auto-invokes the right one.
 | `/context-save` | Save task, decisions, git state, and remaining work to a project-local file. |
 | `/context-restore` | Restore saved context and reconcile it with the current git state. |
 
-## Agents (18)
+## Agents (19)
 
 Subagents you (or a skill) can delegate to. **All are read-only except
 `software-engineer`**, which is the only one with edit/write tools. The
+`deep-researcher` additionally reaches the public web (WebSearch/WebFetch) and
+has read-only Bash for fetching sources — it never edits the repo. The
 deeper-reasoning agents run on `opus`; the rest on `sonnet`.
 
 **Implementer (write-capable)**
@@ -131,6 +139,12 @@ deeper-reasoning agents run on `opus`; the rest on `sonnet`.
 | `debugger` | Investigate bugs via a hypothesis tree — no fixes without investigation. |
 | `docs-reader` | Answer project questions from docs/tests; flag where docs and code diverge. |
 
+**Research**
+
+| Agent | What it does |
+|---|---|
+| `deep-researcher` | Read-only web research worker: investigates ONE sub-question with WebSearch/WebFetch and returns structured, source-backed findings. The `/deep-research` skill fans out several of these in parallel. |
+
 ## Inspiration (not a dependency)
 
 The role-based structure is inspired by Garry Tan's open-source
@@ -142,7 +156,7 @@ checks, and Diataxis docs.
 This toolkit **does not depend on gstack** and does not clone it. It is simpler,
 private, and hardened for work use:
 
-- ~25 skills + ~18 agents, all plain markdown — no external binaries, no telemetry,
+- ~26 skills + ~19 agents, all plain markdown — no external binaries, no telemetry,
   no analytics directory, no required browser automation.
 - Every reusable file is generic; nothing proprietary is ever persisted globally.
 - Safety hooks are minimal and "careful, not annoying" (confirm, don't block).
