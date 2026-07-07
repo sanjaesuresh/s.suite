@@ -5,60 +5,30 @@
 #     cd claude-code-toolkit
 #     powershell -ExecutionPolicy Bypass -File .\bootstrap.ps1
 #
-# Windows uses COPY MODE only. Symlinks on Windows require admin or Developer
-# Mode and are blocked in many corporate environments, so we do not use them.
+# Windows uses COPY MODE only by default. Symlinks on Windows require admin or
+# Developer Mode and are blocked in many corporate environments.
 # The .sh hook scripts run under Git Bash / WSL; native cmd.exe will not run
 # them, so install Git for Windows (which Claude Code already expects).
+#
+# Flags are passed through to scripts\install.ps1:
+#   -DryRun   Show what would happen without making changes.
+#   -Symlink  Attempt symlink mode (requires admin or Developer Mode).
+
+[CmdletBinding()]
+param(
+    [switch]$Symlink,
+    [switch]$DryRun
+)
 
 $ErrorActionPreference = "Stop"
 
-$RepoDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$Src     = Join-Path $RepoDir "global"
-$Dest    = Join-Path $env:USERPROFILE ".claude"
-$Stamp   = Get-Date -Format "yyyyMMdd-HHmmss"
+$RepoDir    = Split-Path -Parent $MyInvocation.MyCommand.Path
+$InstallPs1 = Join-Path $RepoDir "scripts\install.ps1"
 
 Write-Host "[bootstrap] toolkit at: $RepoDir"
-Write-Host "[bootstrap] dest: $Dest (copy mode)"
+Write-Host "[bootstrap] installing global config into $env:USERPROFILE\.claude ..."
 
-if (-not (Test-Path $Dest)) { New-Item -ItemType Directory -Path $Dest | Out-Null }
-
-function Backup-IfExists($target) {
-  if (Test-Path $target) {
-    $bdir = Join-Path $Dest ".toolkit-backups\$Stamp"
-    if (-not (Test-Path $bdir)) { New-Item -ItemType Directory -Path $bdir -Force | Out-Null }
-    Copy-Item $target -Destination $bdir -Recurse -Force
-    Write-Host "[bootstrap] backed up $(Split-Path $target -Leaf)"
-  }
-}
-
-# Files
-foreach ($f in @("CLAUDE.md","settings.json")) {
-  $s = Join-Path $Src $f
-  if (Test-Path $s) {
-    Backup-IfExists (Join-Path $Dest $f)
-    Copy-Item $s -Destination (Join-Path $Dest $f) -Force
-    Write-Host "[bootstrap] installed $f"
-  }
-}
-
-# Directories: skills, agents (from global/), scripts (from repo root)
-$dirMap = @{
-  "skills"  = (Join-Path $Src "skills")
-  "agents"  = (Join-Path $Src "agents")
-  "scripts" = (Join-Path $RepoDir "scripts")
-}
-foreach ($name in $dirMap.Keys) {
-  $s = $dirMap[$name]
-  if (Test-Path $s) {
-    $d = Join-Path $Dest $name
-    Backup-IfExists $d
-    if (Test-Path $d) { Remove-Item $d -Recurse -Force }
-    Copy-Item $s -Destination $d -Recurse -Force
-    Write-Host "[bootstrap] installed $name"
-  }
-}
+& $InstallPs1 -Symlink:$Symlink -DryRun:$DryRun
 
 Write-Host ""
-Write-Host "[bootstrap] Done. settings.local.json and credentials were left untouched."
-Write-Host "[bootstrap] Note: .sh hooks require Git Bash or WSL on Windows."
-Write-Host "[bootstrap] Open Claude Code and try:  /office-hours   or   /careful"
+Write-Host "[bootstrap] Done. Open Claude Code and try:  /office-hours   or   /careful"

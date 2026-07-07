@@ -86,17 +86,34 @@ When more than one skill could fire, these win:
 - **Build or change web UI (component, page, dashboard, landing page):**
   `frontend-engineer`, not `software-engineer`. It adds the browser gates the
   generic loop lacks — a deliberate not-AI-looking design, WCAG 2.2 a11y, Core
-  Web Vitals, and every-state coverage. Use `frontend-design`/`impeccable` only
-  for open-ended *creative* direction, then return to `frontend-engineer` to
-  build it. For a review-only de-slop audit, run `frontend-engineer`'s bundled
-  `devibe_scan.py` (or the standalone `unslop-ui` skill if you have it installed).
-- **Execute a written plan with mostly-independent tasks:** `subagent-driven-development`.
+  Web Vitals, and every-state coverage. Use `frontend-design` / `impeccable`
+  (both external plugins — not bundled in this toolkit) only for open-ended
+  *creative* direction, then return to `frontend-engineer` to build it. For a
+  review-only de-slop audit, run `frontend-engineer`'s bundled `devibe_scan.py`
+  (or the standalone `unslop-ui` skill if you have it installed).
+- **Execute a plan:**
+  - *Approved written plan, subagents available (default):* `subagent-driven-development` — dispatches a fresh implementer subagent per task, per-task spec and quality reviews, groups independent tasks into parallel waves.
+  - *Approved written plan, no Agent tool / separate session:* `executing-plans` — executes the plan inline without subagent dispatch; the skill itself defers to `subagent-driven-development` when agents are available.
+  - *No written plan, 2+ independent problems to investigate:* `dispatching-parallel-agents` — ad-hoc parallel fan-out for unrelated failures or independent domains; not a substitute for a plan executor on a real plan.
 - **Write a multi-step plan artifact:** `writing-plans`. Not `implementation-plan`
   or `spec` (both off) — invoke `spec` only when "definition of done" is the hard
   part; you rarely need spec *and* a plan.
 - **Start ticket/feature work:** `kickoff` (investigate, scope, branch), then `writing-plans`.
 - **Debug a root cause:** `systematic-debugging` (not `debugging-incident-review`, off).
-- **Ship:** `pre-pr-review` → `finishing-a-development-branch` → `pr-description`.
+- **Is the PR green / fix failing CI:** `ci-watch` — checks per-job CI status, tails failing logs, and proposes (not auto-applies) a fix; ask-first gate for any rerun or push.
+- **Ship:** `pre-pr-review` → `ci-watch` (if CI is red) → `finishing-a-development-branch` → `pr-description`.
+- **Release / changelog / version bump:** `release` — collects real commits since the last tag, drafts a Keep-a-Changelog entry, recommends a semver bump, gates on `release-manager`, and creates the tag only after explicit approval. Never pushes.
+- **Review a plan before coding:**
+  - *Implementation plan (architecture, risks, edge cases):* `engineering-plan-review`.
+  - *Frontend or UX plan:* `design-plan-review`.
+  - *Product idea or feature proposal:* `product-plan-review` (off by default — enable in settings.json skillOverrides to auto-use, or invoke explicitly).
+  - *All angles at once (engineering + design + scope in one pass):* `plan-pipeline`.
+- **Audit, analyze, or research:**
+  - *Deep codebase audit (architecture quality, dead code, structural debt):* `deep-codebase-audit` (off by default — enable in settings.json skillOverrides to auto-use, or invoke explicitly).
+  - *Project health (lint, tests, types, dependencies):* `health-check`.
+  - *Plan a refactor safely (define the test safety net and commit sequence first):* `safe-refactor-plan`.
+  - *Multi-source research on any topic:* `researcher`.
+  - *Learn how a specific part of this codebase actually works:* `learn-codebase`.
 
 ## Conserve context — delegate exploration to subagents
 

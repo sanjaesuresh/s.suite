@@ -10,28 +10,36 @@ description: >
 
 ## Tool contract — READ-ONLY
 
-Investigate and report. Does not modify files. Runs read-only commands (lint,
-typecheck, test) only — does not install packages, deploy, or mutate state.
+Investigate and report. Does not modify files. Runs read-only commands only —
+does not install packages, deploy, or mutate state.
 
 ## How to work
 
 1. **Check for a health script**: If `~/.claude/scripts/health-check.sh` exists,
    run it and use its output as the primary input. Parse results into the output
-   format below.
+   format below. The script automatically covers (all tool-gated and
+   stack-detected):
+   - Lint, typecheck, test, build (Node, Python, Go, Rust)
+   - Dependency audit: `npm audit`/`pnpm audit`/`yarn audit` (Node),
+     `pip-audit` (Python), `cargo audit` (Rust), `govulncheck` (Go)
+   - Format check: `prettier --check` (Node), `black --check` (Python),
+     `gofmt -l` (Go), `cargo fmt --check` (Rust)
+   - Dead-code: `knip`/`ts-prune` (Node), `vulture` (Python); Go/Rust dead-code
+     is skipped-with-note (no standard single-binary tool scripted — model-driven
+     only)
+   - Secret scan: `gitleaks` or `trufflehog` if installed; skipped-with-install-
+     hint otherwise
 
 2. **Detect the stack**: Read `package.json`, `pyproject.toml`, `Cargo.toml`,
    `go.mod`, `.github/workflows/`, or equivalent CI config. Identify what tools
    are configured.
 
-3. **Run what you can**: Execute available checks in this order:
-   - Formatting: `prettier --check`, `black --check`, `gofmt -l`, etc.
-   - Lint: `eslint`, `ruff`, `clippy`, etc.
-   - Typecheck: `tsc --noEmit`, `mypy`, etc.
-   - Unit tests: `jest`, `pytest`, `cargo test`, etc.
-   - Build: `tsc`, `cargo build`, `go build`, etc.
-   - Dead code: `ts-prune`, `vulture`, `cargo +nightly rustc -- -W dead-code`, etc.
-   - Dependency risk: outdated packages, known CVEs if `npm audit` / `pip-audit`
-     is available.
+3. **Supplement scripted output with model-driven checks**: After parsing the
+   script output, run or propose additional checks not covered by the script:
+   - Lint: `eslint`, `ruff`, `clippy`, etc. (if not already run by the script)
+   - Dead code for Go/Rust: `staticcheck`, `unused`, `cargo +nightly rustc -- -W dead-code`
+   - Flaky test detection: look for `.skip`, `xfail`, commented-out tests
+   - CI gap analysis: compare what runs locally vs what runs in CI
 
 4. **If execution is not possible**: Propose the specific commands that should be
    run, based on the detected stack. Do not invent checks that have no basis in

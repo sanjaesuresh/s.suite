@@ -119,6 +119,10 @@ You MUST complete each phase before proceeding to the next.
    - Keep tracing up until you find the source
    - Fix at source, not at symptom
 
+6. **Dispatch the `debugger` Agent for Deep Traces**
+
+   When root-cause tracing spans multiple files, logs, or tests — especially when reading them inline would consume significant context — dispatch the `debugger` agent (read-only, opus) instead of tracing yourself. Brief it with the symptom, the full error or stack trace, and what you have already ruled out. Act on its returned hypothesis as your starting point for Phase 3.
+
 ### Phase 2: Pattern Analysis
 
 **Find the pattern before fixing:**

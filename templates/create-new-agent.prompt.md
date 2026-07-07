@@ -44,7 +44,7 @@ tools:
   - Grep
   - Glob
   - Bash
-model: claude-sonnet-4-5
+model: sonnet
 ---
 
 # <Agent Display Name>
@@ -108,8 +108,10 @@ State which tools this agent uses and why each is included.
 
 ### 4. Recommended Model
 
-- **claude-sonnet-4-5** (default): fast iteration, code generation, most review tasks, summarization, search-heavy work.
-- **claude-opus-4-5** (upgrade for): deep-reasoning tasks — security architecture review, complex debugging, migration planning, multi-file refactor analysis, tasks where a missed edge case has high cost.
+- **sonnet** (default): fast iteration, code generation, most review tasks, summarization, search-heavy work.
+- **opus** (upgrade for): deep-reasoning tasks — security architecture review, complex debugging, migration planning, multi-file refactor analysis, tasks where a missed edge case has high cost.
+
+> Aliases resolve to current models: `sonnet` → Sonnet 5, `opus` → Opus 4.8. `haiku` is also available.
 
 State which model and why.
 
@@ -156,7 +158,7 @@ tools:
   - Grep
   - Glob
   - Bash
-model: claude-sonnet-4-5
+model: sonnet
 ---
 
 # My Agent

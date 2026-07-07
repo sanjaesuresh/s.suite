@@ -11,8 +11,8 @@ fixed once. A reviewer caught something; this skill makes sure the toolkit
 learns it.
 
 This is for **continuous toolkit improvement**. It edits the toolkit's own
-files (`global/CLAUDE.md`, `global/skills/*`, `global/agents/*`) — which load in
-every future session — and logs each lesson to `global/LESSONS.md`.
+files (`~/.claude/CLAUDE.md`, `~/.claude/skills/*`, `~/.claude/agents/*`) — which load in
+every future session — and logs each lesson to `~/.claude/LESSONS.md`.
 
 ## Trigger
 
@@ -23,7 +23,7 @@ Manual. You invoke it after receiving review feedback. Accept any of:
 
 ## HARD GATE — never leak work-specific information
 
-Before writing to ANY `global/*` file, strip every work-specific identifier:
+Before writing to ANY `~/.claude/` file, strip every work-specific identifier:
 repo/service names, internal URLs, real pasted code, secrets, tokens, stack
 traces. Generalize the lesson so it would make sense in any project. **If the
 lesson cannot be generalized without leaking, do NOT write to a global file** —
@@ -54,12 +54,12 @@ not every comment yields a toolkit edit.
 Search the toolkit for whether this class is already covered:
 
 ```bash
-ls global/skills global/agents
-grep -ri "<keyword from the class>" global/CLAUDE.md global/skills global/agents
+ls ~/.claude/skills ~/.claude/agents
+grep -ri "<keyword from the class>" ~/.claude/CLAUDE.md ~/.claude/skills ~/.claude/agents
 ```
 
 Pick the single best home:
-- a general behavior rule → `global/CLAUDE.md` or a build skill (e.g. `software-engineer`);
+- a general behavior rule → `~/.claude/CLAUDE.md` or a build skill (e.g. `software-engineer`);
 - a review blind spot → the matching reviewer agent (e.g. `security-reviewer`, `ai-slop-detector`);
 - a workflow gap → the relevant skill.
 
@@ -88,9 +88,9 @@ After approval:
 1. Make the edit to the target file.
 2. Gather metadata: `git rev-parse --abbrev-ref HEAD` (branch),
    `date '+%Y-%m-%d %H:%M %Z'` (timestamp), PR number if known.
-3. Dedup: scan existing **Root cause / class** lines in `global/LESSONS.md`. If
+3. Dedup: scan existing **Root cause / class** lines in `~/.claude/LESSONS.md`. If
    this class is already logged, update that entry instead of adding a duplicate.
-4. Prepend a new entry to `global/LESSONS.md`, directly below the
+4. Prepend a new entry to `~/.claude/LESSONS.md`, directly below the
    `<!-- New entries... -->` marker:
 
 ```
@@ -115,5 +115,9 @@ After approval:
 
 - Don't write the surface fix as the lesson — record the class.
 - Don't pile a redundant rule onto something already covered.
-- Don't let any work-specific identifier reach a `global/*` file.
+- Don't let any work-specific identifier reach a `~/.claude/` file.
 - Don't edit a global file without explicit confirmation in step 5.
+
+## Keeping the toolkit repo in sync
+
+If you maintain the toolkit as a git repo (e.g. `claude-code-toolkit`), mirror any edits made to `~/.claude/CLAUDE.md`, `~/.claude/skills/*`, or `~/.claude/LESSONS.md` back into the repo's `global/` copy and commit — otherwise the installed changes will be overwritten the next time `install.sh` runs.

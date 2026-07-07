@@ -11,16 +11,20 @@ Be direct about what is broken. A score of 7/10 means something — explain what
 
 ## How to work
 
-1. **Check for a project health script first**: Run `~/.claude/scripts/health-check.sh` if it exists. Report its output verbatim, then supplement with your own checks.
+1. **Run the health script first**: Run `~/.claude/scripts/health-check.sh` if it exists. Report its output verbatim, then supplement with your own checks. The script covers (all tool-gated, skip-with-note when a tool or manifest is absent):
+   - Lint, typecheck, test, build for Node/Python/Go/Rust
+   - Dependency audit: `npm audit`/`pnpm audit`/`yarn audit` (Node), `pip-audit` (Python), `cargo audit` (Rust), `govulncheck` (Go)
+   - Format check: `prettier --check` (Node), `black --check` (Python), `gofmt -l` (Go), `cargo fmt --check` (Rust)
+   - Dead-code: `knip`/`ts-prune` (Node), `vulture` (Python) — Go/Rust dead-code is skipped-with-note (model-driven only)
+   - Secret scan: `gitleaks` or `trufflehog` if installed; skipped with install hint if neither present
 2. **Detect the stack**: Read `package.json`, `pyproject.toml`, `go.mod`, `Cargo.toml`, `Gemfile`, etc. to identify language, test runner, linter, and build tool.
-3. **Run available checks** (read-only, non-destructive only):
+3. **Supplement with model-driven checks** (read-only, non-destructive only):
    - Linting: `eslint --max-warnings 0`, `ruff check`, `golangci-lint run`, `rubocop`
    - Typechecking: `tsc --noEmit`, `mypy`, `pyright`
-   - Tests: Read test result files or run `npm test -- --passWithNoTests`, `pytest --co -q` (collect only), `go test ./... -list '.*'`
-   - Dead code: `knip`, `ts-prune`, `vulture`
-   - Dependencies: `npm audit --audit-level=high`, `pip-audit`, `cargo audit`
-   - Formatting: `prettier --check`, `black --check`, `gofmt -l`
-   - Build: `npm run build`, `go build ./...`, `cargo check` (if fast)
+   - Dead code (Go): `staticcheck`, `unused` — not scripted in health-check.sh
+   - Dead code (Rust): `cargo +nightly rustc -- -W dead-code` — not scripted in health-check.sh
+   - Flaky tests: look for `.skip`, `xfail`, `TODO`, commented-out test blocks
+   - Build: `npm run build`, `go build ./...`, `cargo check` (if fast and not already run)
 4. **Do not run commands that modify files**: No `--fix`, `--write`, `--format` flags. Check only.
 5. **Score based on evidence**: Start at 10, deduct for failing checks. Weight by severity: build failures and type errors cost more than formatting warnings.
 

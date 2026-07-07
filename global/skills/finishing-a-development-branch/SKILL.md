@@ -63,6 +63,10 @@ git merge-base HEAD main 2>/dev/null || git merge-base HEAD master 2>/dev/null
 
 Or ask: "This branch split from main - is that correct?"
 
+### Step 3.5: Go/No-Go Check
+
+Before presenting options, dispatch the `release-manager` agent for a go/no-go verdict. Brief it with the branch name, base branch, and a summary of what changed. Surface any blockers it returns before showing the merge/PR menu — if it reports a blocker, stop and resolve it before proceeding to Step 4.
+
 ### Step 4: Present Options
 
 **Normal repo and named-branch worktree — present exactly these 4 options:**

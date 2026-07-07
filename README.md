@@ -26,13 +26,15 @@ written so Claude auto-invokes the right one.
 > `subagent-driven-development`) and not separately listed. They're not deleted —
 > flip any back on under `skillOverrides` (`"spec": "on"`) when you want them.
 
-## Skills (27)
+## Skills (42)
 
 **Plan & scope**
 
 | Skill | What it does |
 |---|---|
+| `/brainstorming` | Explore intent, requirements, and design through collaborative dialogue — mandatory gate before any creative or build work. |
 | `/kickoff` | Front door for new work: ticket/feature → branch (work) → investigate the codebase → ask only the decision-altering questions (with pros/cons) → scoped plan. No code. |
+| `/writing-plans` | Produce a comprehensive implementation plan in plain English (file-per-task, behavior, tests) before touching code. |
 | `/office-hours` | Challenge a product idea like a founder-mentor before any planning. |
 | `/spec` ⊘ | Turn vague intent into a precise, executable spec with a clear definition of done. |
 | `/implementation-plan` ⊘ | Research the area and produce a scoped plan (lighter than `kickoff`; no branch/ticket flow). |
@@ -47,6 +49,10 @@ written so Claude auto-invokes the right one.
 |---|---|
 | `/software-engineer` | The default build/fix loop: understand → plan → implement in small steps → verify with evidence → self-review. Orchestrates the specialists. |
 | `/frontend-engineer` | The build/fix loop for **web UI**: brief-first design (so it doesn't look AI-generated) + engineering gates — WCAG 2.2 a11y, Core Web Vitals, every-state coverage, semantic HTML, tokens, production-readiness (SEO/CSP/images/CI). Bundles a CI scanner for AI design tells. |
+| `/using-git-worktrees` | Set up an isolated workspace via native tools or git worktree before starting feature work or executing a plan. |
+| `/dispatching-parallel-agents` | Fan out 2+ independent tasks to specialized agents running concurrently in separate contexts. |
+| `/subagent-driven-development` | Execute an implementation plan with independent tasks in the current session by dispatching them as concurrent subagent waves. |
+| `/finishing-a-development-branch` | After tests pass, present structured options for merge, PR, or cleanup and execute the chosen integration workflow. |
 
 **Research**
 
@@ -64,6 +70,8 @@ written so Claude auto-invokes the right one.
 | `/test-gap-analysis` ⊘ | Find missing, weak, or misleading tests in code or a diff. |
 | `/ai-slop-cleanup` ⊘ | Find (and optionally fix) AI slop, overengineering, dead code, fake robustness. |
 | `/pr-description` | Generate a PR description grounded in the real diff + validation performed. |
+| `/ci-watch` | Check CI status for the current PR, tail failing job logs, and propose (not auto-apply) a fix — read-only by default. |
+| `/release` | Collect real commits from git log since the last tag, draft a changelog and semver bump, then propose a tag — nothing pushed without explicit confirmation. |
 | `/standup` | Mine recent git, PRs, and blocker signals into a short, human-sounding Yesterday/Today/Blockers script to say in standup. |
 
 **Debug & refactor**
@@ -71,6 +79,7 @@ written so Claude auto-invokes the right one.
 | Skill | What it does |
 |---|---|
 | `/debugging-incident-review` ⊘ | Investigate a bug/incident methodically — root cause before any fix. (Off: superseded by `/systematic-debugging`.) |
+| `/systematic-debugging` | Investigate any bug, test failure, or unexpected behavior by tracing root cause before proposing any fix. |
 | `/safe-refactor-plan` | Plan a refactor safely: tests first, small commits, rollback path. |
 | `/split-commit` | Review the working tree and split it into focused commits (feature / fix / refactor / docs / chore). Proposes the grouping and waits for approval; commits only — never pushes or branches. |
 
@@ -93,7 +102,7 @@ written so Claude auto-invokes the right one.
 | `/context-save` | Save task, decisions, git state, and remaining work to a project-local file. |
 | `/context-restore` | Restore saved context and reconcile it with the current git state. |
 
-## Agents (20)
+## Agents (19)
 
 Subagents you (or a skill) can delegate to. **All are read-only except
 `software-engineer` and `frontend-engineer`**, the two with edit/write tools. The
@@ -143,7 +152,6 @@ deeper-reasoning agents run on `opus`; the rest on `sonnet`.
 |---|---|
 | `codebase-teacher` | Explore the repo and teach a feature/subsystem from real code. |
 | `debugger` | Investigate bugs via a hypothesis tree — no fixes without investigation. |
-| `docs-reader` | Answer project questions from docs/tests; flag where docs and code diverge. |
 
 **Research**
 
@@ -162,7 +170,7 @@ checks, and Diataxis docs.
 This toolkit **does not depend on gstack** and does not clone it. It is simpler,
 private, and hardened for work use:
 
-- 27 skills + 20 agents, all plain markdown — no external binaries, no telemetry,
+- 42 skills + 19 agents, all plain markdown — no external binaries, no telemetry,
   no analytics directory, no required browser automation.
 - Every reusable file is generic; nothing proprietary is ever persisted globally.
 - Safety hooks are minimal and "careful, not annoying" (confirm, don't block).
@@ -179,8 +187,8 @@ claude-code-toolkit/
   global/                          # installs into ~/.claude
     CLAUDE.md                      # global operating instructions
     settings.json                  # safe starter settings + hooks
-    skills/<name>/SKILL.md         # 27 reusable skills (+ process skills)
-    agents/<name>.md               # 20 reusable subagents
+    skills/<name>/SKILL.md         # 42 reusable skills (+ process skills)
+    agents/<name>.md               # 19 reusable subagents
   templates/                       # examples to copy into real repos
     project-claude.md              # example project CLAUDE.md
     project-settings.json          # example project .claude/settings.json
@@ -192,6 +200,8 @@ claude-code-toolkit/
     block-dangerous-commands.sh  freeze-edits.sh  unfreeze-edits.sh  notify.sh
     context-save.sh  context-restore.sh  health-check.sh  statusline.sh
 ```
+
+`scripts/statusline.sh` renders the Claude Code status bar: active model name, context window usage (%), cumulative session cost in USD, and session duration (e.g. `[claude-sonnet-4-5] 42% context | $0.18 | 12m`).
 
 ## Install
 
@@ -210,10 +220,13 @@ cd claude-code-toolkit
 powershell -ExecutionPolicy Bypass -File .\bootstrap.ps1
 ```
 
-Install copies `CLAUDE.md`, `settings.json`, `skills/`, `agents/`, and `scripts/`
-into `~/.claude`, makes scripts executable, **backs up** anything it overwrites
-(`~/.claude/.toolkit-backups/<timestamp>/`), and **never** touches
-`settings.local.json` or credentials.
+Install copies `CLAUDE.md`, `LESSONS.md`, `skills/`, `agents/`, and `scripts/`
+into `~/.claude`, makes scripts executable, and **backs up** anything it overwrites
+(`~/.claude/.toolkit-backups/<timestamp>/`). `settings.json` is **deep-merged**
+into any existing `~/.claude/settings.json`, preserving your `plugins`, `theme`,
+and `env` values. Note that leaf arrays inside toolkit-managed objects (such as `permissions.deny`, `permissions.ask`, and `hooks.PreToolUse`) are replaced on every sync, so any custom entries you add there will be overwritten — put those customizations in `settings.local.json` or a project-level settings file instead. `~/.gitignore_global` is wired into `git config --global
+core.excludesfile` so toolkit-managed ignores apply everywhere. Install **never**
+touches `settings.local.json` or credentials.
 
 > Symlink vs copy: **copy is the default** because some corporate environments
 > dislike symlinks. Use `--symlink` only on machines you control.
@@ -227,6 +240,13 @@ cd claude-code-toolkit
 bash scripts/sync.sh               # git pull --ff-only + re-install (copy mode)
 bash scripts/sync.sh --symlink     # ...symlink mode
 bash scripts/sync.sh --no-pull     # re-install without pulling
+```
+
+Windows (PowerShell):
+
+```powershell
+cd claude-code-toolkit
+powershell -ExecutionPolicy Bypass -File .\scripts\sync.ps1
 ```
 
 ## Verify the install

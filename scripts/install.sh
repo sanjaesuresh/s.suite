@@ -157,6 +157,7 @@ install_global_gitignore() { # wire ~/.gitignore_global into git's core.excludes
 }
 
 place_file "CLAUDE.md" "CLAUDE.md"
+place_file "LESSONS.md" "LESSONS.md"
 merge_settings
 install_global_gitignore
 place_dir "skills"

@@ -12,10 +12,13 @@ set -uo pipefail
 TARGET="$HOME/.claude"
 SKILLS_ROOT="$TARGET/skills"
 AGENTS_ROOT="$TARGET/agents"
+SCRIPTS_DIR="$TARGET/scripts"
 if [ "${1:-}" = "--repo" ]; then
   TARGET="$(cd "$(dirname "$0")/.." && pwd)/global"
   SKILLS_ROOT="$TARGET/skills"
   AGENTS_ROOT="$TARGET/agents"
+  # scripts/ lives at the repo root, not inside global/
+  SCRIPTS_DIR="$(cd "$(dirname "$0")/.." && pwd)/scripts"
 fi
 
 errors=0; warns=0
@@ -67,6 +70,17 @@ if [ -d "$AGENTS_ROOT" ]; then
     head -n1 "$a" | grep -q '^---' || err "agent $(basename "$a"): missing frontmatter"
     grep -q '^name:' "$a"          || err "agent $(basename "$a"): missing name:"
     grep -q '^description:' "$a"    || err "agent $(basename "$a"): missing description:"
+    # model: must be present and be a known alias or a full claude- model ID
+    _model_line=$(grep '^model:' "$a" | head -1)
+    if [ -z "$_model_line" ]; then
+      err "agent $(basename "$a"): missing model: field"
+    else
+      _model_val=$(printf '%s' "$_model_line" | sed 's/^model:[[:space:]]*//')
+      case "$_model_val" in
+        opus|sonnet|haiku|claude-*) ;;
+        *) err "agent $(basename "$a"): unrecognized model: $_model_val" ;;
+      esac
+    fi
   done
   ok "$count agents checked"
 else
@@ -79,6 +93,34 @@ if [ -d "$TARGET/scripts" ]; then
     [ -f "$s" ] || continue
     [ -x "$s" ] || warn "$(basename "$s") not executable (run chmod +x)"
   done
+fi
+
+# Cross-check: every script path referenced in settings.json must exist under scripts/.
+# Graceful degradation: skip (warn only) if jq is absent.
+if [ -f "$TARGET/settings.json" ]; then
+  if command -v jq >/dev/null 2>&1; then
+    # statusLine command
+    _sl_cmd=$(jq -r '.statusLine.command // empty' "$TARGET/settings.json")
+    if [ -n "$_sl_cmd" ]; then
+      _sh=$(printf '%s' "$_sl_cmd" | grep -oE '[^/]+\.sh' | head -1)
+      if [ -n "$_sh" ]; then
+        [ -f "$SCRIPTS_DIR/$_sh" ] \
+          && ok "statusLine command → $_sh found" \
+          || err "statusLine references missing script: $_sh (looked in $SCRIPTS_DIR)"
+      fi
+    fi
+    # all hook commands across every event type
+    while IFS= read -r _cmd; do
+      [ -z "$_cmd" ] && continue
+      _sh=$(printf '%s' "$_cmd" | grep -oE '[^/]+\.sh' | head -1)
+      [ -z "$_sh" ] && continue
+      [ -f "$SCRIPTS_DIR/$_sh" ] \
+        && ok "hook command → $_sh found" \
+        || err "hook command references missing script: $_sh (looked in $SCRIPTS_DIR)"
+    done < <(jq -r '.hooks // {} | to_entries[] | .value[] | .hooks[] | select(.type == "command") | .command' "$TARGET/settings.json" 2>/dev/null)
+  else
+    warn "jq not available — skipping settings script cross-check"
+  fi
 fi
 
 echo
