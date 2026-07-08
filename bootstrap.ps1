@@ -1,8 +1,8 @@
 # bootstrap.ps1 — one-shot setup for Windows (PowerShell).
 #
 # Run from a fresh clone of this repo:
-#     git clone https://github.com/sanjaesuresh/claude-code-toolkit.git
-#     cd claude-code-toolkit
+#     git clone https://github.com/sanjaesuresh/s.suite.git
+#     cd s.suite
 #     powershell -ExecutionPolicy Bypass -File .\bootstrap.ps1
 #
 # Windows uses COPY MODE only by default. Symlinks on Windows require admin or

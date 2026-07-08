@@ -1,5 +1,5 @@
 # ============================================================
-# claude-code-toolkit / .gitignore
+# s.suite / .gitignore
 # This repo is a PORTABLE, GENERIC toolkit. Nothing project-
 # specific, machine-specific, or proprietary should ever land
 # here. The rules below are deliberately aggressive.

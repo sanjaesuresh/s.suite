@@ -185,8 +185,8 @@ function Install-GlobalGitignore {
     if (-not (Test-Path $s)) { Say "skip gitignore_global (no source)"; return }
 
     # exact same marker strings as install.sh — must stay in sync across platforms
-    $marker  = "# >>> claude-code-toolkit global excludes >>>"
-    $endmark = "# <<< claude-code-toolkit global excludes <<<"
+    $marker  = "# >>> s.suite global excludes >>>"
+    $endmark = "# <<< s.suite global excludes <<<"
 
     # respect an existing excludesfile; otherwise default to ~/.gitignore_global
     # Wrapped in try/catch: on PS 7.4+ $PSNativeCommandUseErrorActionPreference

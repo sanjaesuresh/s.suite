@@ -125,8 +125,8 @@ merge_settings() { # merge toolkit settings.json INTO existing, preserving user 
 install_global_gitignore() { # wire ~/.gitignore_global into git's core.excludesfile, idempotently
   local s="$SRC/gitignore_global"
   [ -f "$s" ] || { say "skip gitignore_global (no source)"; return 0; }
-  local marker="# >>> claude-code-toolkit global excludes >>>"
-  local endmark="# <<< claude-code-toolkit global excludes <<<"
+  local marker="# >>> s.suite global excludes >>>"
+  local endmark="# <<< s.suite global excludes <<<"
   local block
   block="$(printf '%s\n' "$marker"; cat "$s"; printf '%s\n' "$endmark")"
 

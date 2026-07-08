@@ -1,4 +1,6 @@
-# claude-code-toolkit
+# s.suite
+
+> Sanjae Suresh's Claude Code suite.
 
 A private, portable Claude Code setup: reusable **skills**, **subagents**,
 **hooks**, **safety guardrails**, and **project templates** that turn Claude Code
@@ -180,7 +182,7 @@ You do **not** need to install gstack. Recommended: keep this toolkit standalone
 ## Repo layout
 
 ```
-claude-code-toolkit/
+s.suite/
   README.md
   bootstrap.sh / bootstrap.ps1     # one-shot install (mac/linux | windows)
   .gitignore                       # aggressive: nothing private lands here
@@ -206,8 +208,8 @@ claude-code-toolkit/
 ## Install
 
 ```bash
-git clone https://github.com/sanjaesuresh/claude-code-toolkit.git
-cd claude-code-toolkit
+git clone https://github.com/sanjaesuresh/s.suite.git
+cd s.suite
 bash bootstrap.sh                  # copy mode (default, safe everywhere)
 # or: bash bootstrap.sh --symlink  # symlink mode (personal machines)
 ```
@@ -215,8 +217,8 @@ bash bootstrap.sh                  # copy mode (default, safe everywhere)
 Windows (PowerShell, copy mode only):
 
 ```powershell
-git clone https://github.com/sanjaesuresh/claude-code-toolkit.git
-cd claude-code-toolkit
+git clone https://github.com/sanjaesuresh/s.suite.git
+cd s.suite
 powershell -ExecutionPolicy Bypass -File .\bootstrap.ps1
 ```
 
@@ -236,7 +238,7 @@ touches `settings.local.json` or credentials.
 On each machine after the first:
 
 ```bash
-cd claude-code-toolkit
+cd s.suite
 bash scripts/sync.sh               # git pull --ff-only + re-install (copy mode)
 bash scripts/sync.sh --symlink     # ...symlink mode
 bash scripts/sync.sh --no-pull     # re-install without pulling
@@ -245,7 +247,7 @@ bash scripts/sync.sh --no-pull     # re-install without pulling
 Windows (PowerShell):
 
 ```powershell
-cd claude-code-toolkit
+cd s.suite
 powershell -ExecutionPolicy Bypass -File .\scripts\sync.ps1
 ```
 

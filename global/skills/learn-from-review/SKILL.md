@@ -120,4 +120,4 @@ After approval:
 
 ## Keeping the toolkit repo in sync
 
-If you maintain the toolkit as a git repo (e.g. `claude-code-toolkit`), mirror any edits made to `~/.claude/CLAUDE.md`, `~/.claude/skills/*`, or `~/.claude/LESSONS.md` back into the repo's `global/` copy and commit — otherwise the installed changes will be overwritten the next time `install.sh` runs.
+If you maintain the toolkit as a git repo (e.g. `s.suite`), mirror any edits made to `~/.claude/CLAUDE.md`, `~/.claude/skills/*`, or `~/.claude/LESSONS.md` back into the repo's `global/` copy and commit — otherwise the installed changes will be overwritten the next time `install.sh` runs.
