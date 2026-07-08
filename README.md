@@ -36,6 +36,7 @@ written so Claude auto-invokes the right one.
 |---|---|
 | `/brainstorming` | Explore intent, requirements, and design through collaborative dialogue — mandatory gate before any creative or build work. |
 | `/kickoff` | Front door for new work: ticket/feature → branch (work) → investigate the codebase → ask only the decision-altering questions (with pros/cons) → scoped plan. No code. |
+| `/jira-ticket` | Work a Jira ticket end to end: fetch it from the Atlassian MCP (or ask to connect / paste) → search the repo → propose options → keep a per-ticket doc in an already-gitignored folder → always plan (Opus) → implement via software-engineer (Sonnet) → run tests → summarize (problem/fix/risks/mitigation/next steps). |
 | `/writing-plans` | Produce a comprehensive implementation plan in plain English (file-per-task, behavior, tests) before touching code. |
 | `/office-hours` | Challenge a product idea like a founder-mentor before any planning. |
 | `/spec` ⊘ | Turn vague intent into a precise, executable spec with a clear definition of done. |

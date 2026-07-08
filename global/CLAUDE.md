@@ -99,6 +99,7 @@ When more than one skill could fire, these win:
   or `spec` (both off) — invoke `spec` only when "definition of done" is the hard
   part; you rarely need spec *and* a plan.
 - **Start ticket/feature work:** `kickoff` (investigate, scope, branch), then `writing-plans`.
+- **Work a Jira ticket end to end:** `jira-ticket` — fetches the ticket via the Atlassian MCP (or asks to connect / paste), keeps a per-ticket doc in an already-gitignored folder, always plans (Opus), then delegates the build to `software-engineer` (Sonnet) and runs tests. Use over `kickoff` when the work has a Jira key and MCP access; `kickoff` stays the no-API/paste front door.
 - **Debug a root cause:** `systematic-debugging` (not `debugging-incident-review`, off).
 - **Is the PR green / fix failing CI:** `ci-watch` — checks per-job CI status, tails failing logs, and proposes (not auto-applies) a fix; ask-first gate for any rerun or push.
 - **Ship:** `pre-pr-review` → `ci-watch` (if CI is red) → `finishing-a-development-branch` → `pr-description`.
