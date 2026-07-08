@@ -184,6 +184,14 @@ that implementer. Single-file mechanical fixes also take the cheapest tier.
 - Touches multiple files with integration concerns → standard model
 - Requires design judgment or broad codebase understanding → most capable model
 
+**Real budget enforcement lives in Workflows, not here.** This skill's cost
+control is pre-flight judgment — pick the cheapest model that fits each role —
+because a skill-dispatched subagent cannot read live token spend. When you need
+an actual accumulating budget (a hard token ceiling, or a spend-aware
+loop-until-budget), run the work as a Workflow instead: its `budget.spent()` /
+`budget.remaining()` meter the shared token pool in real time. Reach for that
+when a run's cost must be bounded by a number, not a heuristic.
+
 ## Handling Implementer Status
 
 Implementer subagents report one of four statuses. Handle each appropriately:
@@ -201,6 +209,41 @@ Implementer subagents report one of four statuses. Handle each appropriately:
 4. If the plan itself is wrong, escalate to the human
 
 **Never** ignore an escalation or force the same model to retry without changes. If the implementer said it's stuck, something needs to change.
+
+## Retry Budget and Failure Class
+
+Cap re-dispatches so a stuck task escalates instead of looping. Each task gets
+at most **two** re-dispatch attempts (three tries total) before the controller
+must stop and escalate to the human — controllers that lost their place have
+burned whole sessions re-dispatching the same failing task. Record each attempt
+in the progress ledger so the count survives compaction.
+
+Before re-dispatching, classify the failure — retry only the classes a changed
+dispatch can actually fix:
+
+- **Transient or contextual** (missing context, wrong model tier, task sliced
+  too large): retryable. Re-dispatch with the specific change — more context, a
+  stronger model, a smaller slice — never the same dispatch again.
+- **Structural** (the plan is wrong, the task contradicts another task, an
+  interface it needs was never built, the task is impossible as written): not
+  retryable. Stop and escalate to the human with the specific reason; a retry
+  cannot fix a bad plan. Same rule the pre-flight review and reviewer loop
+  already follow — a plan contradiction is the human's decision.
+
+A failure that exhausts the retry budget is treated as structural: escalate.
+
+### Downstream Invalidation
+
+When a task fails or changes what it produces — it couldn't build the interface
+a later wave was promised, or built it differently — the tasks that depend on it
+are now briefed against a contract that no longer holds. Do not dispatch them
+as-is. Mark each dependent task in the ledger as needing re-brief, and re-derive
+its brief from the interface that was actually produced before it runs. If the
+change is a real scope change and not just a signature tweak, it is a plan
+contradiction: present it and the plan text to the human and ask which governs,
+exactly as the pre-flight review does. This is the only "adapt the remaining
+plan" move the skill makes — always human-gated for real scope changes, never
+an autonomous re-plan.
 
 ## Handling Reviewer ⚠️ Items
 
@@ -319,6 +362,12 @@ a ledger file, not only in todos.
 - When a task's review comes back clean, append one line to the ledger in
   the same message as your other bookkeeping:
   `Task N: complete (commits <base7>..<head7>, review clean)`.
+- Record the run's quality when it ends: **clean** if every task passed with no
+  re-dispatch, **degraded** if any task needed a retry or landed with a recorded
+  concession, **failed** if any task escalated to the human unresolved. Each
+  term has a mechanical trigger — any re-dispatch means at least degraded, any
+  unresolved escalation means failed — so the final review and any standup get a
+  truthful signal instead of a guess.
 - The ledger is your recovery map: the commits it names exist in git even
   when your context no longer remembers creating them. After compaction,
   trust the ledger and `git log` over your own recollection.
