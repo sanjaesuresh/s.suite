@@ -21,6 +21,7 @@ MODE="copy"
 DRY=0
 for arg in "$@"; do
   case "$arg" in
+    "") ;; # skip empty args (e.g. an unset variable expanded by a wrapper) so we don't bail on the catch-all
     --symlink) MODE="symlink" ;;
     --copy)    MODE="copy" ;;
     --dry-run) DRY=1 ;;
