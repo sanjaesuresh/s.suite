@@ -21,14 +21,18 @@ encoding any proprietary information**.
 Invoke anything by `/name`, or just describe the task — every description is
 written so Claude auto-invokes the right one.
 
-> **Lean defaults:** 11 rarely-used, redundant, or superseded skills ship **off**
-> in `settings.json` to save context tokens. The 8 documented ones are marked ⊘
-> below; `test-driven-development`, `verification-before-completion`, and
-> `executing-plans` are also off (superseded by `software-engineer` /
-> `subagent-driven-development`) and not separately listed. They're not deleted —
-> flip any back on under `skillOverrides` (`"spec": "on"`) when you want them.
+> **Lean defaults:** 10 redundant or superseded skills were removed — their jobs
+> are handled by a shipped skill or agent (`test-driven-development` /
+> `verification-before-completion` are baked into `software-engineer`;
+> `executing-plans` → `subagent-driven-development`; `spec` / `implementation-plan`
+> → `writing-plans` / `kickoff`; `product-plan-review` → `office-hours`;
+> `onboarding-map` → `learn-codebase`; `debugging-incident-review` →
+> `systematic-debugging`; `test-gap-analysis` / `ai-slop-cleanup` → the
+> `test-strategist` / `ai-slop-detector` agents). One skill, `/deep-codebase-audit`
+> (marked ⊘ below), still ships **off** in `settings.json`; flip it on under
+> `skillOverrides` (`"deep-codebase-audit": "on"`) when you want it.
 
-## Skills (43)
+## Skills (33)
 
 **Plan & scope**
 
@@ -39,9 +43,6 @@ written so Claude auto-invokes the right one.
 | `/jira-ticket` | Work a Jira ticket end to end: fetch it from the Atlassian MCP (or ask to connect / paste) → search the repo → propose options → keep a per-ticket doc in an already-gitignored folder → always plan (Opus) → implement via software-engineer (Sonnet) → run tests → summarize (problem/fix/risks/mitigation/next steps). |
 | `/writing-plans` | Produce a comprehensive implementation plan in plain English (file-per-task, behavior, tests) before touching code. |
 | `/office-hours` | Challenge a product idea like a founder-mentor before any planning. |
-| `/spec` ⊘ | Turn vague intent into a precise, executable spec with a clear definition of done. |
-| `/implementation-plan` ⊘ | Research the area and produce a scoped plan (lighter than `kickoff`; no branch/ticket flow). |
-| `/product-plan-review` ⊘ | Review a feature plan through a product/founder lens (expand / hold / cut). |
 | `/engineering-plan-review` | Review a plan like an eng manager: architecture, failure modes, tests, rollout. |
 | `/design-plan-review` | Review a UX/frontend plan; scorecard + what a 10/10 looks like. |
 | `/plan-pipeline` | Run a plan through eng + design (+ scope/migration) reviews in one pass; auto-decide routine calls, surface only taste decisions. |
@@ -70,8 +71,6 @@ written so Claude auto-invokes the right one.
 | `/pre-pr-review` | Strict, skeptical review of your current diff before opening a PR. |
 | `/learn-from-review` | Turn a PR review comment into a durable toolkit rule (in CLAUDE.md, a skill, or an agent) so the same mistake isn't repeated. Logs to `LESSONS.md`. |
 | `/deep-codebase-audit` ⊘ | Multi-agent deep audit of a repo, feature, folder, or diff. |
-| `/test-gap-analysis` ⊘ | Find missing, weak, or misleading tests in code or a diff. |
-| `/ai-slop-cleanup` ⊘ | Find (and optionally fix) AI slop, overengineering, dead code, fake robustness. |
 | `/pr-description` | Generate a PR description grounded in the real diff + validation performed. |
 | `/ci-watch` | Check CI status for the current PR, tail failing job logs, and propose (not auto-apply) a fix — read-only by default. |
 | `/release` | Collect real commits from git log since the last tag, draft a changelog and semver bump, then propose a tag — nothing pushed without explicit confirmation. |
@@ -81,7 +80,6 @@ written so Claude auto-invokes the right one.
 
 | Skill | What it does |
 |---|---|
-| `/debugging-incident-review` ⊘ | Investigate a bug/incident methodically — root cause before any fix. (Off: superseded by `/systematic-debugging`.) |
 | `/systematic-debugging` | Investigate any bug, test failure, or unexpected behavior by tracing root cause before proposing any fix. |
 | `/safe-refactor-plan` | Plan a refactor safely: tests first, small commits, rollback path. |
 | `/split-commit` | Review the working tree and split it into focused commits (feature / fix / refactor / docs / chore). Proposes the grouping and waits for approval; commits only — never pushes or branches. |
@@ -91,7 +89,6 @@ written so Claude auto-invokes the right one.
 | Skill | What it does |
 |---|---|
 | `/learn-codebase` | Deep-dive a part of THIS codebase and teach it from real code and call flows. |
-| `/onboarding-map` ⊘ | Generate an onboarding map for an unfamiliar repo. |
 | `/docs-generate` | Generate/update docs from actual code (Diataxis: tutorial / how-to / reference / explanation). |
 | `/health-check` | Run/propose lint, typecheck, tests, build, dead-code, dependency checks; score + top fixes. |
 
@@ -234,6 +231,26 @@ touches `settings.local.json` or credentials.
 > Symlink vs copy: **copy is the default** because some corporate environments
 > dislike symlinks. Use `--symlink` only on machines you control.
 
+## Install as a plugin
+
+Two install paths exist:
+
+- **Bootstrap (above)** — the full setup: skills, agents, hooks, plus the global
+  `CLAUDE.md`, statusline, and permissions copied into `~/.claude`.
+- **Plugin** — the skills, agents, and safety hooks only, via the Claude Code
+  plugin system, from this same repo:
+
+```
+/plugin marketplace add sanjaesuresh/s.suite
+/plugin install toolkit@sanjae-toolkit
+```
+
+The plugin delivers ~85–90% of the toolkit (32 skills, 19 agents, 3 hooks). The
+parts a plugin can't set — global operating instructions, statusline, deny-list
+permissions — are copy-paste templates in
+[`docs/plugin-adoption.md`](docs/plugin-adoption.md). Updates are pull-based; see
+that doc for update commands and the manual templates.
+
 ## Sync across machines
 
 On each machine after the first:
@@ -287,9 +304,6 @@ reviewers. Active `freeze`/`careful` hooks still apply to them.
 |---|---|---|
 | `/kickoff` | Tech lead | Ticket/feature → branch → investigate → ask only what matters → plan |
 | `/office-hours` | Founder/mentor | Challenge a product idea before building |
-| `/spec` ⊘ | — | Turn vague intent into a precise, executable spec |
-| `/implementation-plan` ⊘ | — | Scoped plan + risks before any code |
-| `/product-plan-review` ⊘ | Product/founder | Review a feature plan (expand / hold / cut) |
 | `/engineering-plan-review` | Eng manager | Architecture, failure modes, tests, rollout |
 | `/design-plan-review` | Designer-coder | Score a UX plan, find the 10/10 |
 
@@ -315,7 +329,7 @@ opinion, the `pre-pr-reviewer` subagent runs the same review in isolation.
 Reads the real implementation and teaches it: 30-second explanation, code map,
 the main call flow, key data, edge cases, what the tests prove, and how to change
 it safely. The `codebase-teacher` subagent does the same in an isolated context.
-For whole-repo orientation use `/onboarding-map`.
+For whole-repo orientation, widen `/learn-codebase` to the whole repo.
 
 ### Deep audit
 
@@ -407,7 +421,7 @@ or tokens, saved session context, and anything project/employer-specific. The
 
 1. `bash scripts/validate-claude-config.sh --repo` — structure + JSON + frontmatter.
 2. Install into `~/.claude`, then `bash scripts/validate-claude-config.sh`.
-3. In a throwaway personal repo, try: `/office-hours`, `/spec`,
+3. In a throwaway personal repo, try: `/office-hours`, `/writing-plans`,
    `/engineering-plan-review`, `/pre-pr-review`, `/learn-codebase <topic>`,
    `/careful`, `/freeze <path>` then try editing outside it (should be blocked),
    `/unfreeze`, `/context-save` then `/context-restore`, `/health-check`.

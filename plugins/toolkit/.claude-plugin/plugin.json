@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "toolkit",
+  "displayName": "Sanjae's Toolkit",
+  "description": "Opinionated toolkit of planning, engineering, review, and safety skills + agents for Claude Code.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Sanjae Suresh"
+  },
+  "homepage": "https://github.com/sanjaesuresh/s.suite",
+  "repository": "https://github.com/sanjaesuresh/s.suite",
+  "hooks": "./hooks/hooks.json"
+}

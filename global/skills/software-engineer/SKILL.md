@@ -14,10 +14,10 @@ loop; reach for a specialist skill when one clearly fits better.
 
 - Starting from a ticket or fresh feature (branch + interactive planning) → `/kickoff`.
 - Pure product framing / "should I build this" → `/office-hours`.
-- Writing a spec from vague intent → `/spec`.
+- Turning vague intent into a scoped plan → `/writing-plans` or `/kickoff`.
 - Reviewing an existing diff → `/pre-pr-review`.
 - Understanding code you didn't write → `/learn-codebase`.
-- Investigating a bug whose cause is unknown → `/debugging-incident-review`.
+- Investigating a bug whose cause is unknown → `/systematic-debugging`.
 
 You can still call those from inside this loop — this skill just sequences them.
 
@@ -27,7 +27,7 @@ You can still call those from inside this loop — this skill just sequences the
 - Restate the task in one or two sentences. State what's **in scope** and,
   explicitly, what's **out of scope**.
 - Surface hidden assumptions and open questions now, not after coding. If the
-  ask is fuzzy at the product level, run [[office-hours]] or [[spec]] first.
+  ask is fuzzy at the product level, run [[office-hours]] or [[kickoff]] first.
 - Read the actual code you're about to change and its neighbors. Don't assume
   the architecture — inspect it. Find the call sites and existing tests.
 
@@ -40,7 +40,7 @@ You can still call those from inside this loop — this skill just sequences the
   likely to change, the approach, scope boundaries, risks, assumptions, and the
   test plan. Keep it **plain English — no code or diffs** (file names and
   described behavior only; literal code waits for step 3). For real blast radius
-  use [[implementation-plan]], and consider a second pass from
+  use [[writing-plans]], and consider a second pass from
   [[engineering-plan-review]] (architecture/failure modes) or
   [[design-plan-review]] (UX) before writing code.
 - **You may NOT advance to step 3 until I have approved the plan.** Write the
@@ -80,7 +80,8 @@ You can still call those from inside this loop — this skill just sequences the
 - Run [[pre-pr-review]] on your own diff (it's read-only). Treat its verdict
   honestly — fix blockers before you call the work complete.
 - If it flags a specialist follow-up (security, tests, architecture, scope),
-  run that agent. For a heavier pass, `/deep-codebase-audit current diff`.
+  run that agent. For a heavier pass, dispatch the review agents directly
+  (architecture-reviewer, security-reviewer, scope-guardian).
 
 ### 6. Report honestly — with a change summary
 Close with a short **change summary** in plain English: what changed and why,
@@ -102,9 +103,9 @@ expand scope on your own.
 
 | Situation | Go to |
 |---|---|
-| Fuzzy product ask | [[office-hours]], [[spec]] |
-| Needs a real plan | [[implementation-plan]], [[engineering-plan-review]] |
-| Bug with unknown cause | [[debugging-incident-review]] |
+| Fuzzy product ask | [[office-hours]], [[kickoff]] |
+| Needs a real plan | [[writing-plans]], [[engineering-plan-review]] |
+| Bug with unknown cause | [[systematic-debugging]] |
 | Unfamiliar code | [[learn-codebase]] |
 | Risky/large refactor | [[safe-refactor-plan]] |
 | Ready to wrap up | [[pre-pr-review]], `/pr-description` |

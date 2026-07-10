@@ -11,17 +11,7 @@
     "superpowers@claude-plugins-official": false
   },
   "skillOverrides": {
-    "spec": "off",
-    "deep-codebase-audit": "off",
-    "implementation-plan": "off",
-    "product-plan-review": "off",
-    "onboarding-map": "off",
-    "test-gap-analysis": "off",
-    "ai-slop-cleanup": "off",
-    "debugging-incident-review": "off",
-    "test-driven-development": "off",
-    "verification-before-completion": "off",
-    "executing-plans": "off"
+    "deep-codebase-audit": "off"
   },
   "permissions": {
     "defaultMode": "dontAsk",
