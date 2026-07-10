@@ -11,6 +11,19 @@ It is designed to be **safe**, **reusable**, and **work-safe**: usable on
 personal projects and inside a corporate/employer environment **without
 encoding any proprietary information**.
 
+## Quick start (plugin)
+
+Install the skills, agents, and safety hooks in two commands inside Claude Code:
+
+```
+/plugin marketplace add sanjaesuresh/s-suite
+/plugin install toolkit@s-suite
+```
+
+That's 32 skills, 19 agents, and 3 hooks. For the full setup (adds the global
+`CLAUDE.md`, statusline, and permissions) use the [bootstrap install](#install)
+instead. Details and manual templates: [`docs/plugin-adoption.md`](docs/plugin-adoption.md).
+
 ## What this is
 
 - **Global, generic tooling** lives in `global/` and installs into `~/.claude`.
