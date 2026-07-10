@@ -70,8 +70,8 @@ and plan first. When in doubt, plan.
   `kickoff`, `writing-plans`), then **implementation skills** (`software-engineer`,
   `frontend-engineer`, `frontend-design`). "Build X" → brainstorm/plan first.
   "Fix bug Y" → systematic-debugging first.
-- Treat rigid skills (`test-driven-development`, `systematic-debugging`,
-  `verification-before-completion`) as discipline to follow exactly, not adapt away.
+- Treat rigid skills like `systematic-debugging` as discipline to follow
+  exactly, not adapt away.
 - These instructions still win on conflict: an explicit user request or a
   project `CLAUDE.md` overrides any skill.
 
@@ -80,17 +80,15 @@ and plan first. When in doubt, plan.
 Each skill's own description says what it does; this is only the tie-break when
 more than one could fire.
 
-- **Build / fix (default):** `software-engineer` — already bakes in test-first and
-  verify-before-done, so don't invoke `test-driven-development` or
-  `verification-before-completion` separately (both off).
+- **Build / fix (default):** `software-engineer` — already bakes in test-first
+  and verify-before-done as one loop.
 - **Web UI:** `frontend-engineer`, not `software-engineer` (adds a11y / Core Web
   Vitals / every-state gates). `frontend-design` / `impeccable` (external) for
   open-ended creative direction only, then build with `frontend-engineer`.
 - **Execute a plan:** `subagent-driven-development` (agents available — default);
-  `executing-plans` (no Agent tool / separate session); `dispatching-parallel-agents`
-  (ad-hoc fan-out, no written plan).
-- **Plan artifact:** `writing-plans`, not `implementation-plan` / `spec` (both off;
-  use `spec` only when "definition of done" is the hard part).
+  `dispatching-parallel-agents` (ad-hoc fan-out, no written plan).
+- **Plan artifact:** `writing-plans` (or `kickoff` for the ticket/branch front
+  door).
 - **New work:** `jira-ticket` when it has a Jira key + MCP access; else `kickoff`
   (the no-API / paste front door) → then `writing-plans`.
 - **Debug a root cause:** `systematic-debugging`.
@@ -109,8 +107,7 @@ more than one could fire.
   summary returns here, keeping the main thread small and cheap.
 - Reserve direct file reads for the few files you will actually edit or quote.
 - Prefer one well-scoped subagent over many redundant reads. When you've mapped
-  an area, consider `/context-save` or saving an `/onboarding-map` so it need not
-  be re-derived later.
+  an area, consider `/context-save` so it need not be re-derived later.
 
 ## Model tiering — plan on Opus, build on Sonnet
 

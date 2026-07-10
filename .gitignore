@@ -1,5 +1,5 @@
 # ============================================================
-# s.suite / .gitignore
+# s-suite / .gitignore
 # This repo is a PORTABLE, GENERIC toolkit. Nothing project-
 # specific, machine-specific, or proprietary should ever land
 # here. The rules below are deliberately aggressive.
@@ -44,7 +44,10 @@ backup-*/
 # --- Local design / planning docs (not part of the portable toolkit) ---
 # Specs and plans are working artifacts for building the toolkit, not
 # something installed into ~/.claude. Keep them local.
-docs/
+# Exception: plugin-adoption.md is an adopter-facing deliverable the README
+# links to, so it must be tracked (hence docs/* + a negation, not docs/).
+docs/*
+!docs/plugin-adoption.md
 
 # --- OS / editor noise ---
 .DS_Store

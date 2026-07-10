@@ -1,4 +1,4 @@
-# s.suite
+# s-suite
 
 > Sanjae Suresh's Claude Code suite.
 
@@ -180,7 +180,7 @@ You do **not** need to install gstack. Recommended: keep this toolkit standalone
 ## Repo layout
 
 ```
-s.suite/
+s-suite/
   README.md
   bootstrap.sh / bootstrap.ps1     # one-shot install (mac/linux | windows)
   .gitignore                       # aggressive: nothing private lands here
@@ -206,8 +206,8 @@ s.suite/
 ## Install
 
 ```bash
-git clone https://github.com/sanjaesuresh/s.suite.git
-cd s.suite
+git clone https://github.com/sanjaesuresh/s-suite.git
+cd s-suite
 bash bootstrap.sh                  # copy mode (default, safe everywhere)
 # or: bash bootstrap.sh --symlink  # symlink mode (personal machines)
 ```
@@ -215,8 +215,8 @@ bash bootstrap.sh                  # copy mode (default, safe everywhere)
 Windows (PowerShell, copy mode only):
 
 ```powershell
-git clone https://github.com/sanjaesuresh/s.suite.git
-cd s.suite
+git clone https://github.com/sanjaesuresh/s-suite.git
+cd s-suite
 powershell -ExecutionPolicy Bypass -File .\bootstrap.ps1
 ```
 
@@ -241,8 +241,8 @@ Two install paths exist:
   plugin system, from this same repo:
 
 ```
-/plugin marketplace add sanjaesuresh/s.suite
-/plugin install toolkit@sanjae-toolkit
+/plugin marketplace add sanjaesuresh/s-suite
+/plugin install toolkit@s-suite
 ```
 
 The plugin delivers ~85–90% of the toolkit (32 skills, 19 agents, 3 hooks). The
@@ -256,7 +256,7 @@ that doc for update commands and the manual templates.
 On each machine after the first:
 
 ```bash
-cd s.suite
+cd s-suite
 bash scripts/sync.sh               # git pull --ff-only + re-install (copy mode)
 bash scripts/sync.sh --symlink     # ...symlink mode
 bash scripts/sync.sh --no-pull     # re-install without pulling
@@ -265,7 +265,7 @@ bash scripts/sync.sh --no-pull     # re-install without pulling
 Windows (PowerShell):
 
 ```powershell
-cd s.suite
+cd s-suite
 powershell -ExecutionPolicy Bypass -File .\scripts\sync.ps1
 ```
 

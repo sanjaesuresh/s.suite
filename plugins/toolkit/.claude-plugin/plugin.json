@@ -7,7 +7,7 @@
   "author": {
     "name": "Sanjae Suresh"
   },
-  "homepage": "https://github.com/sanjaesuresh/s.suite",
-  "repository": "https://github.com/sanjaesuresh/s.suite",
+  "homepage": "https://github.com/sanjaesuresh/s-suite",
+  "repository": "https://github.com/sanjaesuresh/s-suite",
   "hooks": "./hooks/hooks.json"
 }
