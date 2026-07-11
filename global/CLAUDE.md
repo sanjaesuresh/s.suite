@@ -211,13 +211,21 @@ These apply everywhere, and especially in work / employer repositories:
 
 ## Git
 
-Run read-only and routine git freely (`status`, `diff`, `log`, `add`, `commit`,
-`stash`, `checkout <branch>`, `rebase`, `merge`, `worktree add`). **Ask first**
-before anything that destroys work or is hard to reverse: `push` (any form),
+Run read-only and routine git freely (`status`, `diff`, `log`, `add`, `stash`,
+`checkout <branch>`, `rebase`, `merge`, `worktree add`).
+
+**`git commit` and `git push` are hard-gated. This is non-negotiable.** Never run
+either one unless I explicitly say so in that same message (e.g. "commit this",
+"push it"), and even then ASK for permission before running it. Never
+proactively offer, suggest, or nudge me to commit or push — no "want me to commit
+this?", no "ready to push?". Finishing a task, passing tests, or a clean diff is
+never a cue to commit or push. Wait for my explicit instruction, then confirm.
+
+**Ask first** before anything else that destroys work or is hard to reverse:
 `git rm`, `git clean`, `git reset --hard`, `git restore`, `git checkout -- <file>`,
 `git branch -D`, `git worktree remove`. When in doubt, ask.
 
-**Approval to push (or any ask-first action) is per-time and non-transferable.**
+**Approval to commit or push (or any ask-first action) is per-time and non-transferable.**
 It covers only the exact action approved at that moment — it does not carry
 across turns, interruptions, or a changed set of commits. A rejected or
 interrupted privileged tool call means *denied*, not *later*: do not re-attempt

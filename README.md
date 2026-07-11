@@ -20,7 +20,7 @@ Install the skills, agents, and safety hooks in two commands inside Claude Code:
 /plugin install toolkit@s-suite
 ```
 
-That's 32 skills, 19 agents, and 3 hooks. For the full setup (adds the global
+That's 34 skills, 20 agents, and 3 hooks. For the full setup (adds the global
 `CLAUDE.md`, statusline, and permissions) use the [bootstrap install](#install)
 instead. Details and manual templates: [`docs/plugin-adoption.md`](docs/plugin-adoption.md).
 
@@ -45,7 +45,7 @@ written so Claude auto-invokes the right one.
 > (marked ⊘ below), still ships **off** in `settings.json`; flip it on under
 > `skillOverrides` (`"deep-codebase-audit": "on"`) when you want it.
 
-## Skills (33)
+## Skills (35)
 
 **Plan & scope**
 
@@ -82,11 +82,13 @@ written so Claude auto-invokes the right one.
 | Skill | What it does |
 |---|---|
 | `/pre-pr-review` | Strict, skeptical review of your current diff before opening a PR. |
+| `/pr-review` | Work a real GitHub PR via the github MCP, in two modes. **Review mode:** review someone else's PR and draft inline comments (dispatches the `pr-reviewer` agent). **Respond mode:** draft replies to review comments on a PR, yours or theirs. Every draft shows its `file:line`; nothing posts without your confirmation. Human-voiced output (no em dashes or AI jargon, `nit:` the only label). |
 | `/learn-from-review` | Turn a PR review comment into a durable toolkit rule (in CLAUDE.md, a skill, or an agent) so the same mistake isn't repeated. Logs to `LESSONS.md`. |
 | `/deep-codebase-audit` ⊘ | Multi-agent deep audit of a repo, feature, folder, or diff. |
 | `/pr-description` | Generate a PR description grounded in the real diff + validation performed. |
 | `/ci-watch` | Check CI status for the current PR, tail failing job logs, and propose (not auto-apply) a fix — read-only by default. |
 | `/release` | Collect real commits from git log since the last tag, draft a changelog and semver bump, then propose a tag — nothing pushed without explicit confirmation. |
+| `/push-it` | Thin release orchestrator: commit → branch hygiene → push → open PR. Confirms before every commit and every push (hard-gated — no step auto-fires) and gates readiness on the `release-manager` agent. Delegates to `split-commit` / `pr-description`; does not watch CI, tag, or merge. |
 | `/standup` | Mine recent git, PRs, and blocker signals into a short, human-sounding Yesterday/Today/Blockers script to say in standup. |
 
 **Debug & refactor**
@@ -115,7 +117,7 @@ written so Claude auto-invokes the right one.
 | `/context-save` | Save task, decisions, git state, and remaining work to a project-local file. |
 | `/context-restore` | Restore saved context and reconcile it with the current git state. |
 
-## Agents (19)
+## Agents (20)
 
 Subagents you (or a skill) can delegate to. **All are read-only except
 `software-engineer` and `frontend-engineer`**, the two with edit/write tools. The
@@ -145,6 +147,7 @@ deeper-reasoning agents run on `opus`; the rest on `sonnet`.
 | `engineering-manager` | Review a plan for architecture, data flow, edge cases, state transitions, tests, delivery risk. |
 | `architecture-reviewer` | Review module boundaries, dependency direction, abstractions, naming, pattern fit. |
 | `pre-pr-reviewer` | Strict PR-readiness second opinion on a diff. |
+| `pr-reviewer` | Strict, isolated review of an existing GitHub PR's diff; verdict + inline-comment drafts. The remote-PR counterpart to `pre-pr-reviewer`. |
 | `scope-guardian` | Review a diff for scope creep; classify each change; suggest a PR split. |
 | `ai-slop-detector` | Flag AI slop, overengineering, dead code, fake error handling, style inconsistency. |
 | `test-strategist` | Find missing tests; propose unit/integration/regression/edge-case tests. |
@@ -183,7 +186,7 @@ checks, and Diataxis docs.
 This toolkit **does not depend on gstack** and does not clone it. It is simpler,
 private, and hardened for work use:
 
-- 43 skills + 19 agents, all plain markdown — no external binaries, no telemetry,
+- 45 skills + 20 agents, all plain markdown — no external binaries, no telemetry,
   no analytics directory, no required browser automation.
 - Every reusable file is generic; nothing proprietary is ever persisted globally.
 - Safety hooks are minimal and "careful, not annoying" (confirm, don't block).
@@ -258,7 +261,7 @@ Two install paths exist:
 /plugin install toolkit@s-suite
 ```
 
-The plugin delivers ~85–90% of the toolkit (32 skills, 19 agents, 3 hooks). The
+The plugin delivers ~85–90% of the toolkit (34 skills, 20 agents, 3 hooks). The
 parts a plugin can't set — global operating instructions, statusline, deny-list
 permissions — are copy-paste templates in
 [`docs/plugin-adoption.md`](docs/plugin-adoption.md). Updates are pull-based; see
