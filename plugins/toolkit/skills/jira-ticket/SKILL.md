@@ -110,6 +110,9 @@ tests. Record the map in the doc.
    [[subagent-driven-development]] when the approved plan has multiple
    independent tasks. Both run on **Sonnet**. Pass them the doc path and the
    locked approach so they implement the smallest correct change.
+3. If the fix changes behavior that nothing tests, add coverage via
+   [[write-tests]] before verifying — skip only when the change is trivial or the
+   behavior is already tested.
 
 ## Phase 6 — Verify
 
@@ -160,6 +163,7 @@ The living doc (in the gitignored folder) accretes across phases:
 
 - [[kickoff]] — no-ticket / paste-only front door that never touches ticket systems.
 - [[software-engineer]] — the plan→implement→verify loop this skill delegates to.
+- [[write-tests]] — add coverage when a fix changes untested behavior.
 - [[subagent-driven-development]] — multi-task execution of an approved plan.
 - [[ci-watch]] — when a PR exists and CI is red.
 - [[pr-description]] — draft the PR once the fix is green.

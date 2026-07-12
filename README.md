@@ -20,7 +20,7 @@ Install the skills, agents, and safety hooks in two commands inside Claude Code:
 /plugin install toolkit@s-suite
 ```
 
-That's 34 skills, 20 agents, and 3 hooks. For the full setup (adds the global
+That's 35 skills, 20 agents, and 3 hooks. For the full setup (adds the global
 `CLAUDE.md`, statusline, and permissions) use the [bootstrap install](#install)
 instead. Details and manual templates: [`docs/plugin-adoption.md`](docs/plugin-adoption.md).
 
@@ -45,7 +45,7 @@ written so Claude auto-invokes the right one.
 > (marked ⊘ below), still ships **off** in `settings.json`; flip it on under
 > `skillOverrides` (`"deep-codebase-audit": "on"`) when you want it.
 
-## Skills (35)
+## Skills (36)
 
 **Plan & scope**
 
@@ -65,6 +65,7 @@ written so Claude auto-invokes the right one.
 | Skill | What it does |
 |---|---|
 | `/software-engineer` | The default build/fix loop: understand → plan → implement in small steps → verify with evidence → self-review. Orchestrates the specialists. |
+| `/write-tests` | Add real test coverage end to end: read the diff and skip changes that don't need tests → enumerate edge/failure cases + map the regression blast radius → write full-scope tests via `software-engineer` (Sonnet) → loop run (added tests first, then the scoped domain suite — not the whole repo) and score until behaviors are pinned and regressions stay green. Front door that `jira-ticket` calls to cover a fix's untested behavior. |
 | `/frontend-engineer` | The build/fix loop for **web UI**: brief-first design (so it doesn't look AI-generated) + engineering gates — WCAG 2.2 a11y, Core Web Vitals, every-state coverage, semantic HTML, tokens, production-readiness (SEO/CSP/images/CI). Bundles a CI scanner for AI design tells. |
 | `/using-git-worktrees` | Set up an isolated workspace via native tools or git worktree before starting feature work or executing a plan. |
 | `/dispatching-parallel-agents` | Fan out 2+ independent tasks to specialized agents running concurrently in separate contexts. |
@@ -186,7 +187,7 @@ checks, and Diataxis docs.
 This toolkit **does not depend on gstack** and does not clone it. It is simpler,
 private, and hardened for work use:
 
-- 45 skills + 20 agents, all plain markdown — no external binaries, no telemetry,
+- 36 skills + 20 agents, all plain markdown — no external binaries, no telemetry,
   no analytics directory, no required browser automation.
 - Every reusable file is generic; nothing proprietary is ever persisted globally.
 - Safety hooks are minimal and "careful, not annoying" (confirm, don't block).
@@ -261,7 +262,7 @@ Two install paths exist:
 /plugin install toolkit@s-suite
 ```
 
-The plugin delivers ~85–90% of the toolkit (34 skills, 20 agents, 3 hooks). The
+The plugin delivers ~85–90% of the toolkit (35 skills, 20 agents, 3 hooks). The
 parts a plugin can't set — global operating instructions, statusline, deny-list
 permissions — are copy-paste templates in
 [`docs/plugin-adoption.md`](docs/plugin-adoption.md). Updates are pull-based; see

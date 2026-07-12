@@ -1,7 +1,7 @@
 # Install s-suite as a Claude Code plugin
 
 The toolkit ships as an installable Claude Code plugin. Two slash commands get
-you the 32 skills, 19 agents, and 3 safety hooks. A few things a plugin *cannot*
+you the 35 skills, 20 agents, and 3 safety hooks. A few things a plugin *cannot*
 install — the global operating instructions, the statusline, and the deny-list
 permissions — are provided below as copy-paste templates.
 
@@ -29,8 +29,8 @@ Updates are **pull-based** — nothing auto-updates. When you want the latest:
 
 | Component | Ships in plugin? | Notes |
 |---|---|---|
-| 32 skills | ✅ Automatic | Includes `toolkit-router`, which carries the planning gate + routing table. |
-| 19 agents | ✅ Automatic | All review/build/research specialists. |
+| 35 skills | ✅ Automatic | Includes `toolkit-router`, which carries the planning gate + routing table. |
+| 20 agents | ✅ Automatic | All review/build/research specialists. |
 | 3 safety hooks | ✅ Automatic | `block-dangerous-commands` (Bash), `freeze-edits` (Edit/Write/NotebookEdit), `notify` (Notification). |
 | Global `CLAUDE.md` operating instructions | ❌ Manual | Plugins can't set global instructions. Paste the template below. |
 | Statusline | ❌ Manual | No plugin manifest field exists for statusline. |
