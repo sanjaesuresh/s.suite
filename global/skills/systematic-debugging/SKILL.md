@@ -297,3 +297,10 @@ From debugging sessions:
 - Random fixes approach: 2-3 hours of thrashing
 - First-time fix rate: 95% vs 40%
 - New bugs introduced: Near zero vs common
+
+## Output brevity (hard rule)
+
+- Answer first: verdict / outcome / result on line one.
+- Procedures, steps, and findings are numbered lists — NEVER paragraphs.
+- DO NOT restate the request, add preamble, or end with a recap of what was just said.
+- Cut anything that does not change what the user does next. Expand only if asked.

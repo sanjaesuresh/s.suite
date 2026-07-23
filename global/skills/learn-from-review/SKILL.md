@@ -121,3 +121,10 @@ After approval:
 ## Keeping the toolkit repo in sync
 
 If you maintain the toolkit as a git repo (e.g. `s-suite`), mirror any edits made to `~/.claude/CLAUDE.md`, `~/.claude/skills/*`, or `~/.claude/LESSONS.md` back into the repo's `global/` copy and commit — otherwise the installed changes will be overwritten the next time `install.sh` runs.
+
+## Output brevity (hard rule)
+
+- Answer first: verdict / outcome / result on line one.
+- Procedures, steps, and findings are numbered lists — NEVER paragraphs.
+- DO NOT restate the request, add preamble, or end with a recap of what was just said.
+- Cut anything that does not change what the user does next. Expand only if asked.

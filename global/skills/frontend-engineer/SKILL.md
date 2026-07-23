@@ -146,3 +146,10 @@ The tell catalog and `devibe_scan.py` are vendored from
 [vibecoded-design-tells](https://github.com/JCarterJohnson/vibecoded-design-tells) (Carter
 Johnson, MIT) — see [ATTRIBUTION.md](ATTRIBUTION.md). The engineering reference files are
 original to this skill.
+
+## Output brevity (hard rule)
+
+- Answer first: verdict / outcome / result on line one.
+- Procedures, steps, and findings are numbered lists — NEVER paragraphs.
+- DO NOT restate the request, add preamble, or end with a recap of what was just said.
+- Cut anything that does not change what the user does next. Expand only if asked.

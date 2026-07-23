@@ -53,3 +53,10 @@ Changes that are fine to include but reviewers need to be aware of. Brief.
 
 ## Suggested PR split
 If the PR should be split: proposed PR 1, PR 2, etc. with the contents of each. If no split is needed, state that explicitly.
+
+## Output brevity (hard rule)
+
+- Answer first: verdict / outcome / result on line one.
+- Procedures, steps, and findings are numbered lists — NEVER paragraphs.
+- DO NOT restate the request, add preamble, or end with a recap of what was just said.
+- Cut anything that does not change what the user does next. Expand only if asked.

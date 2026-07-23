@@ -71,3 +71,10 @@ execute the plan. The plan must be approved before any code changes.
 ## Verification after each step
 (Command or check to confirm tests still pass between commits.)
 ```
+
+## Output brevity (hard rule)
+
+- Answer first: verdict / outcome / result on line one.
+- Procedures, steps, and findings are numbered lists — NEVER paragraphs.
+- DO NOT restate the request, add preamble, or end with a recap of what was just said.
+- Cut anything that does not change what the user does next. Expand only if asked.

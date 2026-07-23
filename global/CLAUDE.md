@@ -70,8 +70,8 @@ and plan first. When in doubt, plan.
   `kickoff`, `writing-plans`), then **implementation skills** (`software-engineer`,
   `frontend-engineer`, `frontend-design`). "Build X" → brainstorm/plan first.
   "Fix bug Y" → systematic-debugging first.
-- Treat rigid skills like `systematic-debugging` as discipline to follow
-  exactly, not adapt away.
+- Treat rigid skills (`test-driven-development`, `systematic-debugging`,
+  `verification-before-completion`) as discipline to follow exactly, not adapt away.
 - These instructions still win on conflict: an explicit user request or a
   project `CLAUDE.md` overrides any skill.
 
@@ -80,15 +80,17 @@ and plan first. When in doubt, plan.
 Each skill's own description says what it does; this is only the tie-break when
 more than one could fire.
 
-- **Build / fix (default):** `software-engineer` — already bakes in test-first
-  and verify-before-done as one loop.
+- **Build / fix (default):** `software-engineer` — already bakes in test-first and
+  verify-before-done, so don't invoke `test-driven-development` or
+  `verification-before-completion` separately (both off).
 - **Web UI:** `frontend-engineer`, not `software-engineer` (adds a11y / Core Web
   Vitals / every-state gates). `frontend-design` / `impeccable` (external) for
   open-ended creative direction only, then build with `frontend-engineer`.
 - **Execute a plan:** `subagent-driven-development` (agents available — default);
-  `dispatching-parallel-agents` (ad-hoc fan-out, no written plan).
-- **Plan artifact:** `writing-plans` (or `kickoff` for the ticket/branch front
-  door).
+  `executing-plans` (no Agent tool / separate session); `dispatching-parallel-agents`
+  (ad-hoc fan-out, no written plan).
+- **Plan artifact:** `writing-plans`, not `implementation-plan` / `spec` (both off;
+  use `spec` only when "definition of done" is the hard part).
 - **New work:** `jira-ticket` when it has a Jira key + MCP access; else `kickoff`
   (the no-API / paste front door) → then `writing-plans`.
 - **Debug a root cause:** `systematic-debugging`.
@@ -107,7 +109,8 @@ more than one could fire.
   summary returns here, keeping the main thread small and cheap.
 - Reserve direct file reads for the few files you will actually edit or quote.
 - Prefer one well-scoped subagent over many redundant reads. When you've mapped
-  an area, consider `/context-save` so it need not be re-derived later.
+  an area, consider `/context-save` or saving an `/onboarding-map` so it need not
+  be re-derived later.
 
 ## Model tiering — plan on Opus, build on Sonnet
 
@@ -181,6 +184,35 @@ confirmation before proceeding — never act on a vague reply.
 - Explain from concrete files, functions, and call flows in *this* repo.
 - No textbook generalities. Trace the real implementation.
 - Explain the common path first, then variants. Call out confusing naming.
+
+## Output style — straight to the point
+
+Structure is the point. NEVER collapse an answer into a wall of prose.
+
+1. **Answer first.** The first line is the outcome — the verdict, the fix,
+   the number. Context comes after it, never before it.
+2. **Instructions are numbered steps.** Any time you tell me how to do
+   something (a procedure, commands to run, a fix), write numbered steps:
+   one action per step, with the exact command / file / setting in the step
+   itself. NEVER describe a procedure in a paragraph.
+3. **Paragraph budget.** At most 3 sentences per paragraph, and at most two
+   short paragraphs of explanation in a normal answer. Past that, convert to
+   a list or cut it.
+4. **Why is one line.** Give a reason only when it changes what I'd do, and
+   give it in one line. Skip the theory — I'll ask if I want it.
+5. **Hard words for hard rules.** For things that must or must not happen,
+   write DO NOT / NEVER / STOP / ASK FIRST — not "you might want to consider".
+6. **Commit.** When you list options, end with one recommendation and why.
+   "It depends" with no pick is a cop-out.
+
+Anti-patterns — this is how output goes wrong:
+
+- Restating my question before answering it.
+- Paragraphs of context before the first actionable line.
+- A hedged step ("you could probably...") where there is one right step.
+- A closing summary that repeats the answer just given.
+- Interleaving steps and explanation — steps go in the list, explanation
+  (if any) goes after it.
 
 ## Voice
 

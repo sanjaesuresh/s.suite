@@ -122,3 +122,10 @@ Prose with inline citations [1][2]. ...
 - If a worker returns "inconclusive," say so in the report — don't paper over it.
 - Prefer fewer well-sourced claims over a long list of weakly-sourced ones.
 - If the whole question can't be answered from public sources, say so plainly.
+
+## Output brevity (hard rule)
+
+- Answer first: verdict / outcome / result on line one.
+- Procedures, steps, and findings are numbered lists — NEVER paragraphs.
+- DO NOT restate the request, add preamble, or end with a recap of what was just said.
+- Cut anything that does not change what the user does next. Expand only if asked.

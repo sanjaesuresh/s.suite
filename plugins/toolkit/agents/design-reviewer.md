@@ -56,3 +56,10 @@ Concrete, prioritized list. Each change: what to do, where, and why. Blockers fi
 
 ## Do not overbuild
 What should be explicitly deferred or cut from this iteration. Brief reason for each.
+
+## Output brevity (hard rule)
+
+- Answer first: verdict / outcome / result on line one.
+- Procedures, steps, and findings are numbered lists — NEVER paragraphs.
+- DO NOT restate the request, add preamble, or end with a recap of what was just said.
+- Cut anything that does not change what the user does next. Expand only if asked.

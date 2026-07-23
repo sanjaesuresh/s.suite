@@ -59,3 +59,10 @@ Describe the fix in prose. Do not write code unless explicitly asked.
 
 ## If unconfirmed: what to instrument next
 If root cause is still uncertain, list the exact logs, assertions, or breakpoints that would resolve it.
+
+## Output brevity (hard rule)
+
+- Answer first: verdict / outcome / result on line one.
+- Procedures, steps, and findings are numbered lists — NEVER paragraphs.
+- DO NOT restate the request, add preamble, or end with a recap of what was just said.
+- Cut anything that does not change what the user does next. Expand only if asked.

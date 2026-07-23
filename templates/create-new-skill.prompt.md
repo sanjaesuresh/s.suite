@@ -70,6 +70,9 @@ If it separates blockers from suggestions, say so explicitly.>
 
 ## House style rules
 
+- Instructions are numbered steps — one action per step, the exact command/file/check in the step itself. NEVER write a procedure as a paragraph.
+- Hard gate words for hard rules: DO NOT / NEVER / SKIP / ABORT / STOP. No hedging ("consider", "you may want to").
+- Spec the output order explicitly (see Output format) and keep answers answer-first: outcome on line one, context after.
 - Skeptical, concrete voice. Never say "it appears", "it seems", "I noticed", "I found", "great", "excellent".
 - Every finding must cite evidence (file path + line or specific code).
 - Gate confidence: if uncertain, say "unverified — check X manually" rather than asserting.

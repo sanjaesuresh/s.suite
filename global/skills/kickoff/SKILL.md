@@ -146,3 +146,10 @@ Recommend whether to run [[engineering-plan-review]] (risky/large) or
 - [[writing-plans]] — turn the scoped ask into a file-per-task plan once investigation is done.
 - [[brainstorming]] — when the ask is vague and you need to nail intent and definition of done first.
 - [[office-hours]] — when it's not yet clear the work is worth doing.
+
+## Output brevity (hard rule)
+
+- Answer first: verdict / outcome / result on line one.
+- Procedures, steps, and findings are numbered lists — NEVER paragraphs.
+- DO NOT restate the request, add preamble, or end with a recap of what was just said.
+- Cut anything that does not change what the user does next. Expand only if asked.

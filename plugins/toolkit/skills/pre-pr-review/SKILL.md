@@ -126,3 +126,10 @@ Recommend whether to run, and why:
 For a deeper multi-specialist pass, dispatch the review agents directly
 (architecture-reviewer, security-reviewer, scope-guardian, test-strategist).
 The matching subagent is `pre-pr-reviewer` (for a fresh, isolated second opinion).
+
+## Output brevity (hard rule)
+
+- Answer first: verdict / outcome / result on line one.
+- Procedures, steps, and findings are numbered lists — NEVER paragraphs.
+- DO NOT restate the request, add preamble, or end with a recap of what was just said.
+- Cut anything that does not change what the user does next. Expand only if asked.

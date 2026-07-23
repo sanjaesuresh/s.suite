@@ -58,3 +58,10 @@ bash "${CLAUDE_PLUGIN_ROOT}/scripts/unfreeze-edits.sh"
 
 - `/careful` — destructive-command warnings. See [[careful]].
 - `/guard <path>` — careful + freeze. See [[guard]].
+
+## Output brevity (hard rule)
+
+- Answer first: verdict / outcome / result on line one.
+- Procedures, steps, and findings are numbered lists — NEVER paragraphs.
+- DO NOT restate the request, add preamble, or end with a recap of what was just said.
+- Cut anything that does not change what the user does next. Expand only if asked.

@@ -82,3 +82,10 @@ Practical guidance: where to edit, what not to break, what to test after.
 - Subagent `codebase-teacher` for an isolated deep read.
 - Widen this skill's scope to the whole repo when you need orientation across the
   entire codebase rather than one subsystem.
+
+## Output brevity (hard rule)
+
+- Answer first: verdict / outcome / result on line one.
+- Procedures, steps, and findings are numbered lists — NEVER paragraphs.
+- DO NOT restate the request, add preamble, or end with a recap of what was just said.
+- Cut anything that does not change what the user does next. Expand only if asked.

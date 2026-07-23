@@ -124,3 +124,10 @@ typed it in a hurry. This is a hard requirement, not a preference.
 - Don't review the local uncommitted diff here — that's `pre-pr-review`.
 - Don't pad feedback. Every inline comment ties to a real line and says something
   actionable.
+
+## Output brevity (hard rule)
+
+- Answer first: verdict / outcome / result on line one.
+- Procedures, steps, and findings are numbered lists — NEVER paragraphs.
+- DO NOT restate the request, add preamble, or end with a recap of what was just said.
+- Cut anything that does not change what the user does next. Expand only if asked.

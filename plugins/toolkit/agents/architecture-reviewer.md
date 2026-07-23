@@ -56,3 +56,10 @@ Concrete, targeted changes. Each references a specific finding above. Not a rewr
 
 ## Long-term risks
 What will become painful when: (a) a second implementation is added, (b) requirements change in the most likely direction, (c) a new team member tries to extend this code. Be specific.
+
+## Output brevity (hard rule)
+
+- Answer first: verdict / outcome / result on line one.
+- Procedures, steps, and findings are numbered lists — NEVER paragraphs.
+- DO NOT restate the request, add preamble, or end with a recap of what was just said.
+- Cut anything that does not change what the user does next. Expand only if asked.

@@ -109,3 +109,10 @@ push or offer to push unless the user asks.
   make the one commit and say why splitting wasn't warranted.
 - This skill is the multi-commit counterpart to the `/commit` command, which
   always makes exactly one commit.
+
+## Output brevity (hard rule)
+
+- Answer first: verdict / outcome / result on line one.
+- Procedures, steps, and findings are numbered lists — NEVER paragraphs.
+- DO NOT restate the request, add preamble, or end with a recap of what was just said.
+- Cut anything that does not change what the user does next. Expand only if asked.

@@ -82,6 +82,9 @@ model: sonnet
 
 ## House style rules
 
+- Instructions and procedures are numbered steps — one action per step. NEVER describe a procedure in a paragraph.
+- Hard gate words for hard rules: DO NOT / NEVER / SKIP / ABORT / STOP. No hedging.
+- Answer-first output: verdict or key finding on line one, evidence after.
 - Skeptical, evidence-grounded voice. Every claim must cite a file path, line number, or specific code.
 - Confidence-gated: if a finding is unverified, say "unverified — check X manually" rather than asserting it as fact.
 - Separate blockers from suggestions. Never bundle them under a generic "issues" heading.

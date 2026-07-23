@@ -167,3 +167,10 @@ The living doc (in the gitignored folder) accretes across phases:
 - [[subagent-driven-development]] — multi-task execution of an approved plan.
 - [[ci-watch]] — when a PR exists and CI is red.
 - [[pr-description]] — draft the PR once the fix is green.
+
+## Output brevity (hard rule)
+
+- Answer first: verdict / outcome / result on line one.
+- Procedures, steps, and findings are numbered lists — NEVER paragraphs.
+- DO NOT restate the request, add preamble, or end with a recap of what was just said.
+- Cut anything that does not change what the user does next. Expand only if asked.

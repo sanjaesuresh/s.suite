@@ -50,3 +50,10 @@ Explicit list of scope that should be cut or deferred and why.
 
 **Recommended next step**
 One concrete action, not a list of options.
+
+## Output brevity (hard rule)
+
+- Answer first: verdict / outcome / result on line one.
+- Procedures, steps, and findings are numbered lists — NEVER paragraphs.
+- DO NOT restate the request, add preamble, or end with a recap of what was just said.
+- Cut anything that does not change what the user does next. Expand only if asked.

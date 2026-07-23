@@ -79,3 +79,10 @@ format for presenting options, and the deny-list permissions for secret files ar
 **not** enforced by the plugin — they live in the optional `CLAUDE.md` template
 and `settings.json` snippet in `docs/plugin-adoption.md`. Paste those into your
 own `~/.claude/` setup if you want the full toolkit posture.
+
+## Output brevity (hard rule)
+
+- Answer first: verdict / outcome / result on line one.
+- Procedures, steps, and findings are numbered lists — NEVER paragraphs.
+- DO NOT restate the request, add preamble, or end with a recap of what was just said.
+- Cut anything that does not change what the user does next. Expand only if asked.

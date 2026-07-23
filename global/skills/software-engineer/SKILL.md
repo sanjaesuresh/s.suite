@@ -109,3 +109,10 @@ expand scope on your own.
 | Unfamiliar code | [[learn-codebase]] |
 | Risky/large refactor | [[safe-refactor-plan]] |
 | Ready to wrap up | [[pre-pr-review]], `/pr-description` |
+
+## Output brevity (hard rule)
+
+- Answer first: verdict / outcome / result on line one.
+- Procedures, steps, and findings are numbered lists — NEVER paragraphs.
+- DO NOT restate the request, add preamble, or end with a recap of what was just said.
+- Cut anything that does not change what the user does next. Expand only if asked.
